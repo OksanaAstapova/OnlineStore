@@ -1,0 +1,209 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital@0;1&display=swap');
+
+$font: 'Open Sans', sans-serif;
+
+%flex{
+    display: flex;
+    flex-direction: row;
+}
+
+*{
+    margin: 0px;
+    padding: 0px;
+    font-family: $font;
+    text-decoration: none;
+    list-style: none;
+}
+
+.subtitle{
+    text-transform: uppercase;
+    font-weight: 600;
+    margin: 10px;
+
+}
+
+.text{
+    color: #676A74;
+}
+
+.text_italized{
+    font-style: italic;
+}
+
+.header{
+    
+    @extend %flex;
+    height: 10vh;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom:1px solid #eee;
+
+
+    .header__menu{
+
+        @extend %flex;
+        width: 30vw;
+        justify-content: space-around;
+    }
+
+    .header__bar{
+
+        @extend %flex;
+        width: 15vw;
+        justify-content: space-around;
+        border-left:1px solid #eee;
+
+        .favorites{
+            background-image: url(../assets/icons/favs.png);
+            background-position: center;
+            width: 50px;
+            height: 50px;
+            transition: .2s;
+        }
+
+        .favorites:hover{
+            cursor: pointer;
+        }
+
+        .favorites:active{
+            transform: translateY(3px)
+        }
+
+        .favs-active{
+            background-image: url(../assets/icons/favs2.png);
+
+        }
+    }
+}
+
+.main{
+
+    @extend %flex;
+
+    .sidebar{
+
+        @extend %flex;
+        flex-direction: column;
+        width: 20vw;
+        border-right:1px solid #eee;
+        margin-left: 3vw;
+        gap: 3vh;
+
+        .sidebar__cart_title{
+            @extend %flex;
+
+            p{
+                align-self: flex-end;
+            }
+        }
+
+        .sidebar__filters{
+
+            @extend %flex;
+            flex-direction: column;
+            gap: 3vh;
+
+            .filters__colors_block{
+        
+                @extend %flex;
+                align-items: center;
+        
+                .color_circle{
+                    border-radius: 50%;
+                    width: 15px;
+                    height: 15px;
+                }
+        
+                .color_circle_red{
+                    background-color: red;
+                    border: 1px solid red;
+                }
+        
+                .color_circle_black{
+                    background-color: black;
+                    border: 1px solid black;
+                }
+        
+                .color_circle_yellow{
+                    background-color: yellow;
+                    border: 1px solid yellow;
+                }
+        
+                .color_circle_green{
+                    background-color: green;
+                    border: 1px solid green;
+                }
+        
+                .color_circle_blue{
+                    background-color: blue;
+                    border: 1px solid blue;
+                }
+        
+                .color_circle_white{
+                    background-color: white;
+                    border: 1px solid #676A74;
+                }
+            }
+        }
+
+    }
+
+    .products{
+
+        background-color:#eee;
+
+        .products__sort{
+
+            @extend %flex;
+            justify-content: center;
+           
+        }
+
+        .products__wrapper{
+            @extend %flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            width: 80vw;
+
+            .card{
+                margin-top: 3%;
+
+                .card__favs{
+                    position: absolute;
+                    width: 50px;
+                    height: 50px;
+                    background-image: url(../assets/icons/favs.png);
+                    background-position: center;
+                    cursor: pointer;
+                }
+
+                .card__favs_active{
+                    background-image: url(../assets/icons/favs2.png);
+
+                }
+
+                .card__info{
+
+                    @extend %flex;
+                    justify-content: space-around;
+                    background-color: white;
+                    height: 15%;
+        
+                    .card__price{
+        
+                        @extend %flex;
+                        color: rgb(242, 49, 242);
+                        font-weight: 1000;
+                        font-size: 1.2em;
+                        align-items: center;
+                    }
+                }
+            }
+
+            
+        }
+        
+    }
+}
+
+
