@@ -38,7 +38,6 @@ $font: 'Open Sans', sans-serif;
     justify-content: space-between;
     border-bottom:1px solid #eee;
 
-
     .header__menu{
 
         @extend %flex;
@@ -195,6 +194,7 @@ $font: 'Open Sans', sans-serif;
                     background-image: url(../assets/icons/favs2.png);
 
                 }
+                
 
                 .card__info{
 
