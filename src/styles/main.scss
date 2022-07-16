@@ -23,6 +23,10 @@ $font: 'Open Sans', sans-serif;
     list-style: none;
 }
 
+.display-none{
+    display: none;
+}
+
 .subtitle{
     text-transform: uppercase;
     font-weight: 600;
@@ -93,6 +97,19 @@ $font: 'Open Sans', sans-serif;
 .main{
 
     @extend %flex;
+
+    .card_little{
+        @extend %flex;
+
+        .card__img_little{
+            width: 50px;
+        }
+
+        .card__price_little{
+            color: purple
+        }
+
+    }
 
     .sidebar{
 
@@ -259,6 +276,10 @@ $font: 'Open Sans', sans-serif;
                             color: plum;
                             cursor: pointer;
                         }
+                    }
+
+                    .card__hover:hover{
+                        opacity: 0.7;
                     }
 
                     .card__hover_active{

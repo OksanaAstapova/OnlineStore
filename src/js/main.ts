@@ -7,7 +7,7 @@ const img6 = require('../assets/products/6.jpg')
 const img7 = require('../assets/products/7.jpg')
 const img8 = require('../assets/products/8.jpg')
 
-var CardsData = [
+const CardsData = [
     {   'img': img1,
         'alt': 'blue shoulder-off dress',
         'name': 'Blue shoulder-off dress',
@@ -73,18 +73,19 @@ var CardsData = [
         'sizes': ['M', 'XL']
     }
 ]
-    document.addEventListener("DOMContentLoaded", () => {
+
+document.addEventListener("DOMContentLoaded", () => {
         let products__favorites: any = document.querySelector('.products__favorites');
             products__favorites.style.display = 'none';
 
         for(let k=0; k<CardsData.length; k++){
             let wrapper: any = document.querySelector(".products__wrapper");
-            let card = `<div class = "card" onclick = ${k}>
+            let card = `<div class = "card">
             <div class="card__favs"></div>
             <div class = 'card__hover_wrapper'>
                 <img src="${CardsData[k].img}" alt="${CardsData[k].alt}" class = "card__img">
                 <div class = 'card__hover'>
-                    <div class = 'add_to_cart'><p class = 'subtitle'>Add to cart</p></div>
+                    <div class = 'add_to_cart' onclick = 'addToCart(${k})'><p class = 'subtitle'>Add to cart</p></div>
                 </div>
             </div>
             <div class="card__info">
@@ -97,16 +98,12 @@ var CardsData = [
             </div>`;
 
             wrapper.innerHTML += card;
+
+                
         }
+        
 
-        let cards = document.querySelectorAll('.card');
-        cards.forEach(card =>{
-            card.addEventListener('mouseover', ()=>{
-                document.querySelector('.card__hover').classList.add('card__hover_active');
-            })
-        })
-
-        var card__favs = document.querySelectorAll('.card__favs');
+       let card__favs = document.querySelectorAll('.card__favs');
 
         card__favs.forEach(function (el) {
             el.addEventListener('click', () => {
@@ -157,6 +154,21 @@ var CardsData = [
 
     })
 })
+window.addToCart= addToCart;
 
-   
+function addToCart(k: any){
+    let emptyCart = document.querySelector('.empty-cart');
+    let cartInfo = document.querySelector('.sidebar__cart_info');
+
+    emptyCart.classList.add('display-none');
+    let card_little = `<div class = "card_little">
+        <img src="${CardsData[k].img}" alt="${CardsData[k].alt}" class = "card__img_little">
+                <p class="text">${CardsData[k].name}</p>
+                <div class="card__price_little">${CardsData[k].price}</div>
+    </div>`;
+
+    cartInfo.innerHTML += card_little;
+
+
+}
     
