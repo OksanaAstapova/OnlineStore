@@ -2,6 +2,14 @@
 
 $font: 'Open Sans', sans-serif;
 
+@mixin transition($property) {
+    -webkit-transition: $property;
+    -ms-transition: $property;
+    -o-transition: $property;
+     transition: $property;
+  }
+
+
 %flex{
     display: flex;
     flex-direction: row;
@@ -165,6 +173,35 @@ $font: 'Open Sans', sans-serif;
 
         background-color:#eee;
 
+        .products__favorites{
+            background-color: #eee;
+            width: 80vw;
+            height: 100%;
+            position: absolute;
+            z-index: 5;
+            @extend %flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 20px;
+
+            .card__info{
+
+                @extend %flex;
+                justify-content: space-around;
+                background-color: white;
+                height: 15%;
+    
+                .card__price{
+    
+                    @extend %flex;
+                    color: rgb(242, 49, 242);
+                    font-weight: 1000;
+                    font-size: 1.2em;
+                    align-items: center;
+                }
+            }
+        }
+
         .products__sort{
 
             @extend %flex;
@@ -181,6 +218,55 @@ $font: 'Open Sans', sans-serif;
             .card{
                 margin-top: 3%;
 
+                .card__hover_wrapper{
+                    
+                    display: flex;
+                    width: 333px;
+                    height: 466px;
+
+                    // .card__img{
+                    //     position: relative;
+                    // }
+    
+                    .card__hover{
+                        width: 333px;
+                        height: 466px;
+                        position: absolute;
+                        background-color: plum;
+                        z-index: 1;
+                        opacity: 0;
+                        cursor: pointer;
+                        @include transition(all 200ms ease-out);
+
+
+                        .add_to_cart {
+                            position: absolute;
+                            top: 70%;
+                            left: 50%;
+                            width: 152px;
+                            font-size: 16px;
+                            margin-left: -78px;
+                            border: 2px solid #fff;
+                            color: #fff;
+                            text-align: center;
+                            padding: 10px 0;
+                            opacity: 1;
+                            @include transition(all 200ms ease-out);
+                        }
+
+                        .add_to_cart:hover{
+                            background-color: #fff;
+                            color: plum;
+                            cursor: pointer;
+                        }
+                    }
+
+                    .card__hover_active{
+                        opacity: 0.7;
+                    }
+
+                }
+
                 .card__favs{
                     position: absolute;
                     width: 50px;
@@ -188,6 +274,7 @@ $font: 'Open Sans', sans-serif;
                     background-image: url(../assets/icons/favs.png);
                     background-position: center;
                     cursor: pointer;
+                    z-index: 2;
                 }
 
                 .card__favs_active{

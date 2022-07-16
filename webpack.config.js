@@ -5,7 +5,7 @@ const webpack = require('webpack')
 
 module.exports = {
   entry: {
-    entry: './src/index.ts',
+    main: path.resolve(__dirname, './src/index.ts'),
 },
   output: {
     path: path.resolve(__dirname, './dist'),
@@ -14,7 +14,7 @@ module.exports = {
   mode: 'development',
   devServer: {
     historyApiFallback: true,
-    // contentBase: path.resolve(__dirname, './dist'),
+    static: path.resolve(__dirname, './dist'),
     open: true,
     compress: true,
     hot: true,
@@ -45,8 +45,11 @@ module.exports = {
       },
       // Images
       {
-        test: /\.(?:ico|gif|png|jpg|jpeg)$/i,
-        type: 'asset/resource',
+        test: /\.(png|jpe?g|gif|jp2|webp)$/,
+        loader: 'file-loader',
+        options: {
+          name: '[name].[ext]',
+        },
       },
       
     ],

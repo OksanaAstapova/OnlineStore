@@ -1,5 +1,14 @@
+const img1 = require('../assets/products/1.jpg')
+const img2 = require('../assets/products/2.jpg')
+const img3 = require('../assets/products/3.jpg')
+const img4 = require('../assets/products/4.jpg')
+const img5 = require('../assets/products/5.jpg')
+const img6 = require('../assets/products/6.jpg')
+const img7 = require('../assets/products/7.jpg')
+const img8 = require('../assets/products/8.jpg')
+
 var CardsData = [
-    {   'img': '../src/assets/products/1.jpg',
+    {   'img': img1,
         'alt': 'blue shoulder-off dress',
         'name': 'Blue shoulder-off dress',
         'category': 'plain dress',
@@ -7,7 +16,7 @@ var CardsData = [
         'color': 'blue',
         'sizes': ['S', 'M', 'L']
     },
-    {   'img': '../src/assets/products/2.jpg',
+    {   'img': img2,
         'alt': 'blue shirt dress',
         'name': 'Blue shirt dress',
         'category': 'long-sleeved dress',
@@ -15,7 +24,7 @@ var CardsData = [
         'color': 'blue',
         'sizes': ['S', 'M', 'L', 'XL']
     },
-    {   'img': '../src/assets/products/3.jpg',
+    {   'img': img3,
         'alt': 'Striped long-sleeved dress',
         'name': 'Striped long-sleeved dress',
         'category': ['printed dress' , 'long-sleeved'],
@@ -23,7 +32,7 @@ var CardsData = [
         'color': 'white',
         'sizes': ['S', 'M', 'L', 'XL']
     },
-    {   'img': '../src/assets/products/4.jpg',
+    {   'img': img4,
         'alt': 'red dress',
         'name': 'Little red dress',
         'category': ['new arrival', 'plain dress'],
@@ -31,7 +40,7 @@ var CardsData = [
         'color': 'red',
         'sizes': ['L', 'XL']
     },
-    {   'img': '../src/assets/products/5.jpg',
+    {   'img': img5,
         'alt': 'green dress',
         'name': 'Green shirt dress',
         'category': ['new arrival', 'plain dress'],
@@ -39,7 +48,7 @@ var CardsData = [
         'color': 'green',
         'sizes': ['XS', 'S']
     },
-    {   'img': '../src/assets/products/6.jpg',
+    {   'img': img6,
         'alt': 'yellow dress',
         'name': 'Yellow long-sleeved dress',
         'category': ['long-sleeved dress', 'plain dress'],
@@ -47,7 +56,7 @@ var CardsData = [
         'color': 'yellow',
         'sizes': 'S'
     },
-    {   'img': '../src/assets/products/7.jpg',
+    {   'img': img7,
         'alt': 'Striped long-sleeved dress',
         'name': 'Striped long-sleeved dress',
         'category': ['printed dress' , 'long-sleeved'],
@@ -55,7 +64,7 @@ var CardsData = [
         'color': 'white',
         'sizes': ['XS', 'S', 'M', 'XL']
     },
-    {   'img': '../src/assets/products/8.jpg',
+    {   'img': img8,
         'alt': 'long-sleeved dress',
         'name': 'black and white dress',
         'category': ['plain dress' , 'long-sleeved'],
@@ -63,24 +72,21 @@ var CardsData = [
         'color': ['black', 'white'],
         'sizes': ['M', 'XL']
     }
-
-    
-    
 ]
-var favorites: any = document.querySelector('.favorites');
-favorites.addEventListener('click', ()=>{
-
-    favorites.classList.toggle('favs-active');
-})
-
-
-
     document.addEventListener("DOMContentLoaded", () => {
+        let products__favorites: any = document.querySelector('.products__favorites');
+            products__favorites.style.display = 'none';
+
         for(let k=0; k<CardsData.length; k++){
             let wrapper: any = document.querySelector(".products__wrapper");
-            let card = `<div class = "card">
+            let card = `<div class = "card" onclick = ${k}>
             <div class="card__favs"></div>
-            <img src="${CardsData[k].img}" alt="${CardsData[k].alt}" class = "card__img">
+            <div class = 'card__hover_wrapper'>
+                <img src="${CardsData[k].img}" alt="${CardsData[k].alt}" class = "card__img">
+                <div class = 'card__hover'>
+                    <div class = 'add_to_cart'><p class = 'subtitle'>Add to cart</p></div>
+                </div>
+            </div>
             <div class="card__info">
                         <div>
                             <p class="subtitle">${CardsData[k].name}</p>
@@ -93,6 +99,13 @@ favorites.addEventListener('click', ()=>{
             wrapper.innerHTML += card;
         }
 
+        let cards = document.querySelectorAll('.card');
+        cards.forEach(card =>{
+            card.addEventListener('mouseover', ()=>{
+                document.querySelector('.card__hover').classList.add('card__hover_active');
+            })
+        })
+
         var card__favs = document.querySelectorAll('.card__favs');
 
         card__favs.forEach(function (el) {
@@ -101,7 +114,49 @@ favorites.addEventListener('click', ()=>{
             });
         
         });
+
+        var favorites: any = document.querySelector('.favorites');
+
+
+        favorites.addEventListener('click', ()=>{
+
+            favorites.classList.toggle('favs-active');
+            var card__favs_active: any = document.querySelectorAll('.card__favs_active');
+
+            if (favorites.classList.contains('favs-active')){
+                console.log(1)
+                products__favorites.style.display = 'flex';
+                for (let i = 0; i < card__favs_active.length; i++) {
+                    let element = card__favs_active[i];
+                    console.log(card__favs_active[i].parentElement)
+                    let element_wrapper = `<div class = "card" onclick = ${i}>
+                    <div class="card__favs"></div>
+                    <img src="${CardsData[i].img}" alt="${CardsData[i].alt}" class = "card__img">
+                    <div class="card__info">
+                                <div>
+                                    <p class="subtitle">${CardsData[i].name}</p>
+                                    <p class="text">${CardsData[i].category}</p>
+                                    <p class="text" style = 'color: black'>${CardsData[i].sizes}</p>
+                                </div>
+                                <div class="card__price">${CardsData[i].price}</div>
+                            </div>
+                    </div>`;
+                            
+                    products__favorites.innerHTML += element_wrapper;
+                    
+                }
+            }
+            else{
+                console.log(5)
+                products__favorites.style.display = 'none';
+                products__favorites.innerHTML = '';
+
+               
+            }
+            
+
     })
+})
 
    
     
