@@ -27,7 +27,7 @@ const CardsData = [
     {   'img': img3,
         'alt': 'Striped long-sleeved dress',
         'name': 'Striped long-sleeved dress',
-        'category': ['printed dress' , 'long-sleeved'],
+        'category': 'printed dress',
         'price': '33$',
         'color': 'white',
         'sizes': ['S', 'M', 'L', 'XL']
@@ -35,7 +35,7 @@ const CardsData = [
     {   'img': img4,
         'alt': 'red dress',
         'name': 'Little red dress',
-        'category': ['new arrival', 'plain dress'],
+        'category': 'new arrival',
         'price': '50$',
         'color': 'red',
         'sizes': ['L', 'XL']
@@ -43,7 +43,7 @@ const CardsData = [
     {   'img': img5,
         'alt': 'green dress',
         'name': 'Green shirt dress',
-        'category': ['new arrival', 'plain dress'],
+        'category': 'new arrival',
         'price': '44$',
         'color': 'green',
         'sizes': ['XS', 'S']
@@ -51,7 +51,7 @@ const CardsData = [
     {   'img': img6,
         'alt': 'yellow dress',
         'name': 'Yellow long-sleeved dress',
-        'category': ['long-sleeved dress', 'plain dress'],
+        'category': 'plain dress',
         'price': '35$',
         'color': 'yellow',
         'sizes': 'S'
@@ -59,7 +59,7 @@ const CardsData = [
     {   'img': img7,
         'alt': 'Striped long-sleeved dress',
         'name': 'Striped long-sleeved dress',
-        'category': ['printed dress' , 'long-sleeved'],
+        'category': 'long-sleeved',
         'price': '33$',
         'color': 'white',
         'sizes': ['XS', 'S', 'M', 'XL']
@@ -67,7 +67,7 @@ const CardsData = [
     {   'img': img8,
         'alt': 'long-sleeved dress',
         'name': 'Black and white dress',
-        'category': ['plain dress' , 'long-sleeved'],
+        'category': 'long-sleeved',
         'price': '80$',
         'color': ['black', 'white'],
         'sizes': ['M', 'XL']
@@ -168,6 +168,176 @@ document.addEventListener("DOMContentLoaded", () => {
                 
         }
      })
+
+     // filter---------------------------------------------------
+
+     let category_field = <HTMLInputElement>document.querySelector('.filters__categories_checkbox');
+
+     category_field.addEventListener('change', ()=>{
+
+        let category = <HTMLInputElement>document.querySelector('#categories input:checked');
+        let value = category.value
+
+        switch (value) {
+
+            case 'new-arrivals':
+                
+                document.querySelectorAll('.card').forEach(card =>{
+                    card.remove();
+                })
+
+                for (let k = 0; k < CardsData.length; k++) {
+                    
+                    if(CardsData[k].category === 'new arrival'){
+                        let card = `<div class = "card">
+                    <div class="card__favs"></div>
+                    <div class = 'card__hover_wrapper'>
+                        <img src="${CardsData[k].img}" alt="${CardsData[k].alt}" class = "card__img">
+                        <div class = 'card__hover'>
+                            <div class = 'add_to_cart' onclick = 'addToCart(${k})'><p class = 'subtitle'>Add to cart</p></div>
+                        </div>
+                    </div>
+                    <div class="card__info">
+                                <div>
+                                    <p class="subtitle">${CardsData[k].name}</p>
+                                    <p class="text">${CardsData[k].category}</p>
+                                </div>
+                                <div class="card__price">${CardsData[k].price}</div>
+                            </div>
+                    </div>`;
+
+            wrapper.innerHTML += card;
+                    }
+                }
+                
+                break;
+
+            case 'printed-dress':
+                document.querySelectorAll('.card').forEach(card =>{
+                    card.remove();
+                })
+
+                for (let k = 0; k < CardsData.length; k++) {
+                    
+                    if(CardsData[k].category === 'printed dress'){
+                        let card = `<div class = "card">
+                    <div class="card__favs"></div>
+                    <div class = 'card__hover_wrapper'>
+                        <img src="${CardsData[k].img}" alt="${CardsData[k].alt}" class = "card__img">
+                        <div class = 'card__hover'>
+                            <div class = 'add_to_cart' onclick = 'addToCart(${k})'><p class = 'subtitle'>Add to cart</p></div>
+                        </div>
+                    </div>
+                    <div class="card__info">
+                                <div>
+                                    <p class="subtitle">${CardsData[k].name}</p>
+                                    <p class="text">${CardsData[k].category}</p>
+                                </div>
+                                <div class="card__price">${CardsData[k].price}</div>
+                            </div>
+                    </div>`;
+
+            wrapper.innerHTML += card;
+                    }
+                }
+                
+                break;
+
+            case 'plain-dress':
+                document.querySelectorAll('.card').forEach(card =>{
+                    card.remove();
+                })
+
+                for (let k = 0; k < CardsData.length; k++) {
+                    
+                    if(CardsData[k].category === 'plain dress'){
+                        let card = `<div class = "card">
+                    <div class="card__favs"></div>
+                    <div class = 'card__hover_wrapper'>
+                        <img src="${CardsData[k].img}" alt="${CardsData[k].alt}" class = "card__img">
+                        <div class = 'card__hover'>
+                            <div class = 'add_to_cart' onclick = 'addToCart(${k})'><p class = 'subtitle'>Add to cart</p></div>
+                        </div>
+                    </div>
+                    <div class="card__info">
+                                <div>
+                                    <p class="subtitle">${CardsData[k].name}</p>
+                                    <p class="text">${CardsData[k].category}</p>
+                                </div>
+                                <div class="card__price">${CardsData[k].price}</div>
+                            </div>
+                    </div>`;
+
+            wrapper.innerHTML += card;
+                    }
+                }
+                
+                break;
+
+            case 'long-sleeved':
+                document.querySelectorAll('.card').forEach(card =>{
+                    card.remove();
+                })
+
+                for (let k = 0; k < CardsData.length; k++) {
+                    
+                    if(CardsData[k].category === 'long-sleeved'){
+                        let card = `<div class = "card">
+                    <div class="card__favs"></div>
+                    <div class = 'card__hover_wrapper'>
+                        <img src="${CardsData[k].img}" alt="${CardsData[k].alt}" class = "card__img">
+                        <div class = 'card__hover'>
+                            <div class = 'add_to_cart' onclick = 'addToCart(${k})'><p class = 'subtitle'>Add to cart</p></div>
+                        </div>
+                    </div>
+                    <div class="card__info">
+                                <div>
+                                    <p class="subtitle">${CardsData[k].name}</p>
+                                    <p class="text">${CardsData[k].category}</p>
+                                </div>
+                                <div class="card__price">${CardsData[k].price}</div>
+                            </div>
+                    </div>`;
+
+            wrapper.innerHTML += card;
+                    }
+                }           
+                break;
+                
+            default:
+                document.querySelectorAll('.card').forEach(card =>{
+                    card.remove();
+                })
+                
+                for(let k=0; k<CardsData.length; k++){
+                    let card = `<div class = "card">
+                    <div class="card__favs"></div>
+                    <div class = 'card__hover_wrapper'>
+                        <img src="${CardsData[k].img}" alt="${CardsData[k].alt}" class = "card__img">
+                        <div class = 'card__hover'>
+                            <div class = 'add_to_cart' onclick = 'addToCart(${k})'><p class = 'subtitle'>Add to cart</p></div>
+                        </div>
+                    </div>
+                    <div class="card__info">
+                                <div>
+                                    <p class="subtitle">${CardsData[k].name}</p>
+                                    <p class="text">${CardsData[k].category}</p>
+                                </div>
+                                <div class="card__price">${CardsData[k].price}</div>
+                            </div>
+                    </div>`;
+        
+                    wrapper.innerHTML += card;
+        
+                        
+                }
+                break;
+            
+        }
+
+     })
+
+        
 
     //  favorites -------------------------------------------------------------------------
 

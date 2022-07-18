@@ -94,6 +94,9 @@ $font: 'Open Sans', sans-serif;
     }
 }
 
+fieldset{
+    border: none;
+}
 .main{
 
     @extend %flex;
