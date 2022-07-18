@@ -1,11 +1,11 @@
-const img1 = require('../assets/products/1.jpg')
-const img2 = require('../assets/products/2.jpg')
-const img3 = require('../assets/products/3.jpg')
-const img4 = require('../assets/products/4.jpg')
-const img5 = require('../assets/products/5.jpg')
-const img6 = require('../assets/products/6.jpg')
-const img7 = require('../assets/products/7.jpg')
-const img8 = require('../assets/products/8.jpg')
+import img1 from '../assets/products/1.jpg'
+import img2 from '../assets/products/2.jpg'
+import img3 from '../assets/products/3.jpg'
+import img4 from '../assets/products/4.jpg'
+import img5 from '../assets/products/5.jpg'
+import img6 from '../assets/products/6.jpg'
+import img7 from '../assets/products/7.jpg'
+import img8 from '../assets/products/8.jpg'
 
 const CardsData = [
     {   'img': img1,
@@ -66,7 +66,7 @@ const CardsData = [
     },
     {   'img': img8,
         'alt': 'long-sleeved dress',
-        'name': 'black and white dress',
+        'name': 'Black and white dress',
         'category': ['plain dress' , 'long-sleeved'],
         'price': '80$',
         'color': ['black', 'white'],
@@ -77,9 +77,9 @@ const CardsData = [
 document.addEventListener("DOMContentLoaded", () => {
         let products__favorites: any = document.querySelector('.products__favorites');
             products__favorites.style.display = 'none';
+            let wrapper: any = document.querySelector(".products__wrapper");
 
         for(let k=0; k<CardsData.length; k++){
-            let wrapper: any = document.querySelector(".products__wrapper");
             let card = `<div class = "card">
             <div class="card__favs"></div>
             <div class = 'card__hover_wrapper'>
@@ -101,7 +101,75 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 
         }
-        
+
+        // Sort ---------------------------------------------------------------------
+
+    let sort = <HTMLInputElement>document.querySelector('.sort_field');
+
+    sort.addEventListener('change', ()=>{
+
+        console.log(sort.value)
+        let option = sort.value;
+
+        switch (option) {
+            case 'name-up':
+                CardsData.sort((a, b) => a.name > b.name ? 1 : -1);
+                console.log(CardsData)
+                
+                break;
+
+            case 'name-down':
+                CardsData.sort((a, b) => b.name > a.name ? 1 : -1);
+                console.log(CardsData)
+                
+                break;
+
+            case 'price-up':
+                CardsData.sort((a, b) => a.price > b.price ? 1 : -1);
+                console.log(CardsData)
+                
+                break;
+
+            case 'price-down':
+                CardsData.sort((a, b) => a.price < b.price ? 1 : -1);
+                console.log(CardsData)            
+                break;
+                
+            default:
+                
+                break;
+            
+        }
+
+        document.querySelectorAll('.card').forEach(card =>{
+            card.remove();
+        })
+                
+        for(let k=0; k<CardsData.length; k++){
+            let card = `<div class = "card">
+            <div class="card__favs"></div>
+            <div class = 'card__hover_wrapper'>
+                <img src="${CardsData[k].img}" alt="${CardsData[k].alt}" class = "card__img">
+                <div class = 'card__hover'>
+                    <div class = 'add_to_cart' onclick = 'addToCart(${k})'><p class = 'subtitle'>Add to cart</p></div>
+                </div>
+            </div>
+            <div class="card__info">
+                        <div>
+                            <p class="subtitle">${CardsData[k].name}</p>
+                            <p class="text">${CardsData[k].category}</p>
+                        </div>
+                        <div class="card__price">${CardsData[k].price}</div>
+                    </div>
+            </div>`;
+
+            wrapper.innerHTML += card;
+
+                
+        }
+     })
+
+    //  favorites -------------------------------------------------------------------------
 
        let card__favs = document.querySelectorAll('.card__favs');
 
@@ -154,21 +222,61 @@ document.addEventListener("DOMContentLoaded", () => {
 
     })
 })
-window.addToCart= addToCart;
+
+// ADD TO CART----------------------------------------------------------------------
+
+declare global {
+    interface Window { addToCart: any; }
+    interface Window { removeCard: any; }
+
+}
+
+window.addToCart = addToCart;
+
+let clearAll = document.querySelector<HTMLElement>('.remove-all');
+let cartInfo = document.querySelector('.sidebar__cart_info');
+let emptyCart = document.querySelector<HTMLElement>('.empty-cart');
+
 
 function addToCart(k: any){
-    let emptyCart = document.querySelector('.empty-cart');
-    let cartInfo = document.querySelector('.sidebar__cart_info');
 
-    emptyCart.classList.add('display-none');
+
+    clearAll.style.display = 'flex';
+    clearAll.addEventListener('click', clear)
+
+    emptyCart.style.visibility = 'hidden';
+
     let card_little = `<div class = "card_little">
         <img src="${CardsData[k].img}" alt="${CardsData[k].alt}" class = "card__img_little">
-                <p class="text">${CardsData[k].name}</p>
-                <div class="card__price_little">${CardsData[k].price}</div>
+                <div><p class="text">${CardsData[k].name}</p>
+                <div class="card__price_little">${CardsData[k].price}</div></div>
+       <div class='remove-from-card' onclick = 'removeCard()'>✖</div>
     </div>`;
 
     cartInfo.innerHTML += card_little;
 
+   
 
 }
+
+window.removeCard = removeCard;
+
+function removeCard(){
+    let cardLittle = document.querySelector('.remove-from-card').parentElement;
+
+    cardLittle.style.display = 'none';
+}
+
+function clear(){
+    clearAll.style.display = 'none';
+    emptyCart.style.visibility = 'visible';
+
+    document.querySelectorAll('.card_little').forEach(card =>{
+        card.remove();
+    })
+}
+
+
+
+
     

@@ -99,7 +99,7 @@ $font: 'Open Sans', sans-serif;
     @extend %flex;
 
     .card_little{
-        @extend %flex;
+        @extend %flex; 
 
         .card__img_little{
             width: 50px;
@@ -107,6 +107,12 @@ $font: 'Open Sans', sans-serif;
 
         .card__price_little{
             color: purple
+        }
+
+        .remove-from-card{
+            font-weight: 900;
+            color: purple;
+            cursor: pointer;
         }
 
     }
@@ -128,10 +134,23 @@ $font: 'Open Sans', sans-serif;
             }
 
             .cart-icon{
-                background-image: url(../assets/icons/cart.png);
-                background-position: center;
+                
                 width: 30px;
                 height: 30px;
+            }
+
+            .remove-all{
+                color: purple;
+                border: 2px solid purple;
+                font-size: smaller;
+                padding: 2px;
+                display: none;
+                cursor: pointer;
+            }
+
+            .remove-all:hover{
+                background-color: purple;
+                color: white;
             }
         }
 

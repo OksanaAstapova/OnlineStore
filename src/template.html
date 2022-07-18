@@ -23,7 +23,8 @@
             <div class="sidebar__cart">
                 <div class="sidebar__cart_title">
                     <p class="subtitle">Cart</p>
-                    <div class="cart-icon"></div>
+                    <img class="cart-icon" src="cart.png">
+                    <div class="subtitle remove-all">clean</div>
                 </div>
                 <div class="sidebar__cart_info">
                     <p class="text text_italized empty-cart">No items in cart</p>
@@ -115,7 +116,8 @@
             <div class="products__favorites"></div>
             <div class="products__sort">
                 <p class="subtitle">Sort by</p>
-                <select name="sort">
+                <select name="sort" class = 'sort_field'>
+                    <option value="none">None</option>
                     <option value="name-up">Name ↑</option>
                     <option value="name-down">Name ↓</option>
                     <option value="price-up">Price ↑</option>
