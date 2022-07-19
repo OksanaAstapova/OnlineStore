@@ -69,38 +69,50 @@ const CardsData = [
         'name': 'Black and white dress',
         'category': 'long-sleeved',
         'price': '80$',
-        'color': ['black', 'white'],
+        'color': 'black',
         'sizes': ['M', 'XL']
     }
 ]
+let wrapper: any = document.querySelector(".products__wrapper");
+
+function createCard(CardsData: string | any[]){
+
+    for(let k=0; k<CardsData.length; k++){
+        let card = `<div class = "card">
+        <img class="card__favs" src="favs.png">
+        <div class = 'card__hover_wrapper'>
+            <img src="${CardsData[k].img}" alt="${CardsData[k].alt}" class = "card__img">
+            <div class = 'card__hover'>
+                <div class = 'add_to_cart' onclick = 'addToCart(${k})'><p class = 'subtitle'>Add to cart</p></div>
+            </div>
+        </div>
+        <div class="card__info">
+                    <div>
+                        <p class="subtitle">${CardsData[k].name}</p>
+                        <p class="text">${CardsData[k].category}</p>
+                        <p class="text" style = 'color: black'>${CardsData[k].sizes}</p>
+                    </div>
+                    <div class="card__price">${CardsData[k].price}</div>
+                </div>
+        </div>`;
+
+        wrapper.innerHTML += card;
+
+            
+    }
+}
+
+function removeCard(){
+    document.querySelectorAll('.card').forEach(card =>{
+        card.remove();
+    })
+}
 
 document.addEventListener("DOMContentLoaded", () => {
         let products__favorites: any = document.querySelector('.products__favorites');
             products__favorites.style.display = 'none';
-            let wrapper: any = document.querySelector(".products__wrapper");
 
-        for(let k=0; k<CardsData.length; k++){
-            let card = `<div class = "card">
-            <img class="card__favs" src="favs.png">
-            <div class = 'card__hover_wrapper'>
-                <img src="${CardsData[k].img}" alt="${CardsData[k].alt}" class = "card__img">
-                <div class = 'card__hover'>
-                    <div class = 'add_to_cart' onclick = 'addToCart(${k})'><p class = 'subtitle'>Add to cart</p></div>
-                </div>
-            </div>
-            <div class="card__info">
-                        <div>
-                            <p class="subtitle">${CardsData[k].name}</p>
-                            <p class="text">${CardsData[k].category}</p>
-                        </div>
-                        <div class="card__price">${CardsData[k].price}</div>
-                    </div>
-            </div>`;
-
-            wrapper.innerHTML += card;
-
-                
-        }
+        createCard(CardsData);
 
         // Sort ---------------------------------------------------------------------
 
@@ -108,31 +120,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
     sort.addEventListener('change', ()=>{
 
-        console.log(sort.value)
         let option = sort.value;
 
         switch (option) {
             case 'name-up':
                 CardsData.sort((a, b) => a.name > b.name ? 1 : -1);
-                console.log(CardsData)
                 
                 break;
 
             case 'name-down':
                 CardsData.sort((a, b) => b.name > a.name ? 1 : -1);
-                console.log(CardsData)
                 
                 break;
 
             case 'price-up':
                 CardsData.sort((a, b) => a.price > b.price ? 1 : -1);
-                console.log(CardsData)
                 
                 break;
 
             case 'price-down':
                 CardsData.sort((a, b) => a.price < b.price ? 1 : -1);
-                console.log(CardsData)            
                 break;
                 
             default:
@@ -141,35 +148,12 @@ document.addEventListener("DOMContentLoaded", () => {
             
         }
 
-        document.querySelectorAll('.card').forEach(card =>{
-            card.remove();
-        })
+        removeCard();
                 
-        for(let k=0; k<CardsData.length; k++){
-            let card = `<div class = "card">
-            <div class="card__favs"></div>
-            <div class = 'card__hover_wrapper'>
-                <img src="${CardsData[k].img}" alt="${CardsData[k].alt}" class = "card__img">
-                <div class = 'card__hover'>
-                    <div class = 'add_to_cart' onclick = 'addToCart(${k})'><p class = 'subtitle'>Add to cart</p></div>
-                </div>
-            </div>
-            <div class="card__info">
-                        <div>
-                            <p class="subtitle">${CardsData[k].name}</p>
-                            <p class="text">${CardsData[k].category}</p>
-                        </div>
-                        <div class="card__price">${CardsData[k].price}</div>
-                    </div>
-            </div>`;
-
-            wrapper.innerHTML += card;
-
-                
-        }
+        createCard(CardsData);
      })
 
-     // filter---------------------------------------------------
+     // filter by category---------------------------------------------------
 
      let category_field = <HTMLInputElement>document.querySelector('.filters__categories_checkbox');
 
@@ -182,191 +166,155 @@ document.addEventListener("DOMContentLoaded", () => {
 
             case 'new-arrivals':
                 
-                document.querySelectorAll('.card').forEach(card =>{
-                    card.remove();
+                removeCard();
+
+                let cardFilteredNew = CardsData.filter(el => {
+                    return el.category == 'new arrival'
                 })
 
-                for (let k = 0; k < CardsData.length; k++) {
-                    
-                    if(CardsData[k].category === 'new arrival'){
-                        let card = `<div class = "card">
-                    <div class="card__favs"></div>
-                    <div class = 'card__hover_wrapper'>
-                        <img src="${CardsData[k].img}" alt="${CardsData[k].alt}" class = "card__img">
-                        <div class = 'card__hover'>
-                            <div class = 'add_to_cart' onclick = 'addToCart(${k})'><p class = 'subtitle'>Add to cart</p></div>
-                        </div>
-                    </div>
-                    <div class="card__info">
-                                <div>
-                                    <p class="subtitle">${CardsData[k].name}</p>
-                                    <p class="text">${CardsData[k].category}</p>
-                                </div>
-                                <div class="card__price">${CardsData[k].price}</div>
-                            </div>
-                    </div>`;
-
-            wrapper.innerHTML += card;
-                    }
-                }
-                
-                break;
+                createCard(cardFilteredNew)
+                 
+            break;
 
             case 'printed-dress':
-                document.querySelectorAll('.card').forEach(card =>{
-                    card.remove();
+                removeCard();
+
+                let cardFilteredPrint = CardsData.filter(el => {
+                    return el.category == 'printed dress'
                 })
-
-                for (let k = 0; k < CardsData.length; k++) {
-                    
-                    if(CardsData[k].category === 'printed dress'){
-                        let card = `<div class = "card">
-                    <div class="card__favs"></div>
-                    <div class = 'card__hover_wrapper'>
-                        <img src="${CardsData[k].img}" alt="${CardsData[k].alt}" class = "card__img">
-                        <div class = 'card__hover'>
-                            <div class = 'add_to_cart' onclick = 'addToCart(${k})'><p class = 'subtitle'>Add to cart</p></div>
-                        </div>
-                    </div>
-                    <div class="card__info">
-                                <div>
-                                    <p class="subtitle">${CardsData[k].name}</p>
-                                    <p class="text">${CardsData[k].category}</p>
-                                </div>
-                                <div class="card__price">${CardsData[k].price}</div>
-                            </div>
-                    </div>`;
-
-            wrapper.innerHTML += card;
-                    }
-                }
+    
+                createCard(cardFilteredPrint)
                 
                 break;
 
             case 'plain-dress':
-                document.querySelectorAll('.card').forEach(card =>{
-                    card.remove();
+                removeCard();
+
+                let cardFilteredPlain = CardsData.filter(el => {
+                    return el.category == 'plain dress';
                 })
-
-                for (let k = 0; k < CardsData.length; k++) {
-                    
-                    if(CardsData[k].category === 'plain dress'){
-                        let card = `<div class = "card">
-                    <div class="card__favs"></div>
-                    <div class = 'card__hover_wrapper'>
-                        <img src="${CardsData[k].img}" alt="${CardsData[k].alt}" class = "card__img">
-                        <div class = 'card__hover'>
-                            <div class = 'add_to_cart' onclick = 'addToCart(${k})'><p class = 'subtitle'>Add to cart</p></div>
-                        </div>
-                    </div>
-                    <div class="card__info">
-                                <div>
-                                    <p class="subtitle">${CardsData[k].name}</p>
-                                    <p class="text">${CardsData[k].category}</p>
-                                </div>
-                                <div class="card__price">${CardsData[k].price}</div>
-                            </div>
-                    </div>`;
-
-            wrapper.innerHTML += card;
-                    }
-                }
+    
+                createCard(cardFilteredPlain)
                 
-                break;
+            break;
 
             case 'long-sleeved':
-                document.querySelectorAll('.card').forEach(card =>{
-                    card.remove();
-                })
+                removeCard();
 
-                for (let k = 0; k < CardsData.length; k++) {
-                    
-                    if(CardsData[k].category === 'long-sleeved'){
-                        let card = `<div class = "card">
-                    <div class="card__favs"></div>
-                    <div class = 'card__hover_wrapper'>
-                        <img src="${CardsData[k].img}" alt="${CardsData[k].alt}" class = "card__img">
-                        <div class = 'card__hover'>
-                            <div class = 'add_to_cart' onclick = 'addToCart(${k})'><p class = 'subtitle'>Add to cart</p></div>
-                        </div>
-                    </div>
-                    <div class="card__info">
-                                <div>
-                                    <p class="subtitle">${CardsData[k].name}</p>
-                                    <p class="text">${CardsData[k].category}</p>
-                                </div>
-                                <div class="card__price">${CardsData[k].price}</div>
-                            </div>
-                    </div>`;
-
-            wrapper.innerHTML += card;
-                    }
-                }           
+                let cardFilteredLong = CardsData.filter(el => {
+                    return el.category == 'long-sleeved'
+                    })
+    
+                    createCard(cardFilteredLong)
                 break;
                 
             default:
-                document.querySelectorAll('.card').forEach(card =>{
-                    card.remove();
-                })
+                removeCard();
                 
-                for(let k=0; k<CardsData.length; k++){
-                    let card = `<div class = "card">
-                    <div class="card__favs"></div>
-                    <div class = 'card__hover_wrapper'>
-                        <img src="${CardsData[k].img}" alt="${CardsData[k].alt}" class = "card__img">
-                        <div class = 'card__hover'>
-                            <div class = 'add_to_cart' onclick = 'addToCart(${k})'><p class = 'subtitle'>Add to cart</p></div>
-                        </div>
-                    </div>
-                    <div class="card__info">
-                                <div>
-                                    <p class="subtitle">${CardsData[k].name}</p>
-                                    <p class="text">${CardsData[k].category}</p>
-                                </div>
-                                <div class="card__price">${CardsData[k].price}</div>
-                            </div>
-                    </div>`;
-        
-                    wrapper.innerHTML += card;
-        
-                        
-                }
+               createCard(CardsData);
                 break;
             
         }
 
      })
+     // filter by color---------------------------------------------------
 
+     let colors = document.querySelectorAll('.filters__colors_block');
+
+     colors.forEach(color =>{
+
+        color.addEventListener('click', ()=>{
+
+            let option = color.className
+            
+            switch (option) {
+                case 'filters__colors_block red':
+                
+                    removeCard();
+                    
+                    let cardFilteredRed = CardsData.filter(el => {
+                        return el.color == 'red'
+                    })
+
+                    createCard(cardFilteredRed)
+                break;
+
+                case 'filters__colors_block black':
+                    removeCard();
+                    
+                    let cardFilteredBlack = CardsData.filter(el => {
+                        return el.color == 'black'
+                    })
+
+                    createCard(cardFilteredBlack);
+                    break;
+
+                case 'filters__colors_block yellow':
+                    removeCard();
+                    
+                    let cardFilteredYellow = CardsData.filter(el => {
+                        return el.color == 'yellow'
+                    })
+
+                    createCard(cardFilteredYellow);
+                break;
+
+                case 'filters__colors_block green':
+                    removeCard();
+                    
+                    let cardFilteredGreen = CardsData.filter(el => {
+                        return el.color == 'green'
+                    })
+
+                    createCard(cardFilteredGreen) 
+                break;
+                
+                case 'filters__colors_block blue':
+                    removeCard();
+                    
+                    let cardFilteredBlue = CardsData.filter(el => {
+                        return el.color == 'blue'
+                    })
+
+                    createCard(cardFilteredBlue)
+                break;
+
+                case 'filters__colors_block white':
+                    removeCard();
+                    
+                    let cardFilteredWhite = CardsData.filter(el => {
+                        return el.color == 'white'
+                    })
+
+                    createCard(cardFilteredWhite);
+                break;
+                
+            }
+
+            
+        }
+        )
+     })
         
 
     //  favorites -------------------------------------------------------------------------
 
        let card__favs = document.querySelectorAll('.card__favs');
 
-        for (let i = 0; i < card__favs.length; i++) {
-            const el = <HTMLImageElement>card__favs[i];
+       for (let i = 0; i < card__favs.length; i++) {
+        const el = <HTMLImageElement>card__favs[i];
 
-            el.addEventListener('click', () => {
-                el.classList.toggle('card__favs_active')
+        el.addEventListener('click', () => {
+            el.classList.toggle('card__favs_active')
+            el.src = 'favs2.png'
+
+            if (el.classList.contains('card__favs_active')){
                 el.src = 'favs2.png'
 
-                if (el.classList.contains('card__favs_active')){
-                    el.src = 'favs2.png'
-
-                }
-                else el.src = 'favs.png'
-            });
-        }
-       
-       
-    //    card__favs.forEach(function (el) {
-            
-    //         el.addEventListener('click', () => {
-    //             el.classList.toggle('card__favs_active')
-    //             el.src = 'favs2.png'
-    //         });
-        
-    //     });
+            }
+            else el.src = 'favs.png'
+        });
+    }
 
         var favorites: any = document.querySelector('.favorites');
 
@@ -375,15 +323,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
             favorites.classList.toggle('favs-active');
             favorites.src = 'favs2.png';
-
             var card__favs_active: any = document.querySelectorAll('.card__favs_active');
 
             if (favorites.classList.contains('favs-active')){
 
                 products__favorites.style.display = 'flex';
+                favorites.src = 'favs2.png';
+
                 for (let i = 0; i < card__favs_active.length; i++) {
-                    let element = card__favs_active[i];
-                    console.log(card__favs_active[i].parentElement)
+
                     let element_wrapper = `<div class = "card" onclick = ${i}>
                     <div class="card__favs"></div>
                     <img src="${CardsData[i].img}" alt="${CardsData[i].alt}" class = "card__img">
@@ -402,11 +350,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             }
             else{
-                console.log(5)
+                favorites.src = 'favs.png';
                 products__favorites.style.display = 'none';
                 products__favorites.innerHTML = '';
-                favorites.src = 'favs.png';
-
 
                
             }
@@ -419,7 +365,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 declare global {
     interface Window { addToCart: any; }
-    interface Window { removeCard: any; }
+    interface Window { clearCart: any; }
 
 }
 
@@ -451,9 +397,9 @@ function addToCart(k: any){
 
 }
 
-window.removeCard = removeCard;
+window.clearCart = clearCart;
 
-function removeCard(){
+function clearCart(){
     let cardLittle = document.querySelector('.remove-from-card').parentElement;
 
     cardLittle.style.display = 'none';
