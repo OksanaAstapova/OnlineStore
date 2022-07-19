@@ -65,10 +65,7 @@ $font: 'Open Sans', sans-serif;
         border-left:1px solid #eee;
 
         .favorites{
-            background-image: url(../assets/icons/favs.png);
-            background-position: center;
-            width: 50px;
-            height: 50px;
+            
             transition: .2s;
         }
 
@@ -85,12 +82,12 @@ $font: 'Open Sans', sans-serif;
 
         }
 
-        .search{
-            background-image: url(../assets/icons/search.png);
-            background-position: center;
-            width: 50px;
-            height: 50px;
-        }
+        // .search{
+        //     // background-image: url(../assets/icons/search.png);
+        //     // background-position: center;
+        //     // width: 50px;
+        //     // height: 50px;
+        // }
     }
 }
 
@@ -314,8 +311,6 @@ fieldset{
                     position: absolute;
                     width: 50px;
                     height: 50px;
-                    background-image: url(../assets/icons/favs.png);
-                    background-position: center;
                     cursor: pointer;
                     z-index: 2;
                 }
