@@ -33,24 +33,30 @@
             <div class="sidebar__filters">
                 <div class="filters__categories">
                     <p class="subtitle">Categories</p>
-                    <div class="filters__categories_checkbox">
-                        <div>
-                            <input type="checkbox" id="new-arrivals" name="new-arrivals">
-                            <label for="new-arrivals" class="text">New arrivals</label>
-                        </div>
-                        <div>
-                            <input type="checkbox" id="printed-dress" name="printed-dress">
-                            <label for="printed-dress" class="text">Printed dresses</label>
-                        </div>
-                        <div>
-                            <input type="checkbox" id="plain-dress" name="plain-dress">
-                            <label for="plain-dress" class="text">Plain dresses</label>
-                        </div>
-                        <div>
-                            <input type="checkbox" id="long-sleeved" name="long-sleeved">
-                            <label for="long-sleeved" class="text">Long sleeved</label>
-                        </div>
-                    </div>
+                    <form class="filters__categories_checkbox">
+                        <fieldset id="categories">
+                            <div>
+                                <input type="radio" id="show-all" name="category" value="show-all">
+                                <label for="show-all" class="text">Show all</label>
+                            </div>
+                            <div>
+                                <input type="radio" id="new-arrivals" name="category" value="new-arrivals">
+                                <label for="new-arrivals" class="text">New arrivals</label>
+                            </div>
+                            <div>
+                                <input type="radio" id="printed-dress" name="category" value="printed-dress">
+                                <label for="printed-dress" class="text">Printed dresses</label>
+                            </div>
+                            <div>
+                                <input type="radio" id="plain-dress" name="category" value="plain-dress">
+                                <label for="plain-dress" class="text">Plain dresses</label>
+                            </div>
+                            <div>
+                                <input type="radio" id="long-sleeved" name="category" value="long-sleeved">
+                                <label for="long-sleeved" class="text">Long sleeved</label>
+                            </div>
+                        </fieldset>
+                    </form>
                 </div>
                 <div class="filters__colors">
                     <p class="subtitle">Colors</p>
@@ -117,6 +123,7 @@
             <div class="products__sort">
                 <p class="subtitle">Sort by</p>
                 <select name="sort" class = 'sort_field'>
+                    <option value="none">None</option>
                     <option value="name-up">Name ↑</option>
                     <option value="name-down">Name ↓</option>
                     <option value="price-up">Price ↑</option>

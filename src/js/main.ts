@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         for(let k=0; k<CardsData.length; k++){
             let card = `<div class = "card">
-            <div class="card__favs"></div>
+            <img class="card__favs" src="favs.png">
             <div class = 'card__hover_wrapper'>
                 <img src="${CardsData[k].img}" alt="${CardsData[k].alt}" class = "card__img">
                 <div class = 'card__hover'>
@@ -343,12 +343,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
        let card__favs = document.querySelectorAll('.card__favs');
 
-        card__favs.forEach(function (el) {
+        for (let i = 0; i < card__favs.length; i++) {
+            const el = <HTMLImageElement>card__favs[i];
+
             el.addEventListener('click', () => {
                 el.classList.toggle('card__favs_active')
+                el.src = 'favs2.png'
+
+                if (el.classList.contains('card__favs_active')){
+                    el.src = 'favs2.png'
+
+                }
+                else el.src = 'favs.png'
             });
+        }
+       
+       
+    //    card__favs.forEach(function (el) {
+            
+    //         el.addEventListener('click', () => {
+    //             el.classList.toggle('card__favs_active')
+    //             el.src = 'favs2.png'
+    //         });
         
-        });
+    //     });
 
         var favorites: any = document.querySelector('.favorites');
 
@@ -356,10 +374,12 @@ document.addEventListener("DOMContentLoaded", () => {
         favorites.addEventListener('click', ()=>{
 
             favorites.classList.toggle('favs-active');
+            favorites.src = 'favs2.png';
+
             var card__favs_active: any = document.querySelectorAll('.card__favs_active');
 
             if (favorites.classList.contains('favs-active')){
-                console.log(1)
+
                 products__favorites.style.display = 'flex';
                 for (let i = 0; i < card__favs_active.length; i++) {
                     let element = card__favs_active[i];
@@ -385,6 +405,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 console.log(5)
                 products__favorites.style.display = 'none';
                 products__favorites.innerHTML = '';
+                favorites.src = 'favs.png';
+
 
                
             }
