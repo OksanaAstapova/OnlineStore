@@ -74,6 +74,8 @@ const CardsData = [
     }
 ]
 let wrapper: any = document.querySelector(".products__wrapper");
+let colors = document.querySelectorAll('.filters__colors_block');
+
 
 function createCard(CardsData: string | any[]){
 
@@ -106,6 +108,10 @@ function removeCard(){
     document.querySelectorAll('.card').forEach(card =>{
         card.remove();
     })
+}
+
+function removeColorActive(){
+    
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -219,17 +225,29 @@ document.addEventListener("DOMContentLoaded", () => {
      })
      // filter by color---------------------------------------------------
 
-     let colors = document.querySelectorAll('.filters__colors_block');
-
      colors.forEach(color =>{
 
         color.addEventListener('click', ()=>{
 
             let option = color.className
+
+            color.classList.toggle('color_active');
+            color.lastElementChild.classList.toggle('display-flex');
+
+            function remove_color_active(className: string){
+                colors.forEach(color => {
+                    if(!(color.classList.contains(className))){
+                        color.classList.remove('color_active')
+                        color.lastElementChild.classList.remove('display-flex');
+
+                    }
+                })
+            }
             
             switch (option) {
                 case 'filters__colors_block red':
-                
+
+            
                     removeCard();
                     
                     let cardFilteredRed = CardsData.filter(el => {
@@ -237,6 +255,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     })
 
                     createCard(cardFilteredRed)
+                    
+                    remove_color_active('red');
                 break;
 
                 case 'filters__colors_block black':
@@ -247,6 +267,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     })
 
                     createCard(cardFilteredBlack);
+                    remove_color_active('black');
+                    
+
                     break;
 
                 case 'filters__colors_block yellow':
@@ -257,6 +280,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     })
 
                     createCard(cardFilteredYellow);
+                    remove_color_active('yellow');
+
                 break;
 
                 case 'filters__colors_block green':
@@ -266,7 +291,9 @@ document.addEventListener("DOMContentLoaded", () => {
                         return el.color == 'green'
                     })
 
-                    createCard(cardFilteredGreen) 
+                    createCard(cardFilteredGreen);
+                    remove_color_active('green');
+
                 break;
                 
                 case 'filters__colors_block blue':
@@ -276,7 +303,9 @@ document.addEventListener("DOMContentLoaded", () => {
                         return el.color == 'blue'
                     })
 
-                    createCard(cardFilteredBlue)
+                    createCard(cardFilteredBlue);
+                    remove_color_active('blue');
+
                 break;
 
                 case 'filters__colors_block white':
@@ -287,6 +316,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     })
 
                     createCard(cardFilteredWhite);
+                    remove_color_active('white');
+
                 break;
                 
             }
@@ -366,6 +397,7 @@ document.addEventListener("DOMContentLoaded", () => {
 declare global {
     interface Window { addToCart: any; }
     interface Window { clearCart: any; }
+    interface Window { removeColorFilter: any; }
 
 }
 
@@ -414,6 +446,16 @@ function clear(){
     })
 }
 
+window.removeColorFilter = removeColorFilter;
+
+function removeColorFilter(){
+    removeCard();
+    createCard(CardsData);
+
+    colors.forEach(color => {
+        
+    })
+}
 
 
 
