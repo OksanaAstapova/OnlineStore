@@ -27,6 +27,8 @@ $font: 'Open Sans', sans-serif;
     display: none;
 }
 
+
+
 .subtitle{
     text-transform: uppercase;
     font-weight: 600;
@@ -161,11 +163,15 @@ fieldset{
             gap: 3vh;
 
             .filters__colors_block{
-        
+                
+                margin: 7px;
+                cursor: pointer;
                 @extend %flex;
                 align-items: center;
+                width: 50%;
         
                 .color_circle{
+                    margin-right: 5px;
                     border-radius: 50%;
                     width: 15px;
                     height: 15px;
@@ -200,6 +206,22 @@ fieldset{
                     background-color: white;
                     border: 1px solid #676A74;
                 }
+
+                
+            }
+            .color_active{
+                background-color: plum;
+            }
+
+            .color_remove{
+                color:purple;
+               display: none;
+               margin-left: auto;
+               margin-right: 10px;
+                  }
+
+            .display-flex{
+                display: flex;
             }
         }
 

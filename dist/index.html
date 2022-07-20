@@ -14,8 +14,8 @@
             <li>Contacts</li>
         </ul>
         <div class="header__bar">
-            <div class="favorites"></div>
-            <div class="search"></div>
+            <img class="favorites" src="favs.png">
+            <img class="search" src="search.png">
         </div>
     </header>
     <main class="main">
@@ -24,7 +24,7 @@
                 <div class="sidebar__cart_title">
                     <p class="subtitle">Cart</p>
                     <img class="cart-icon" src="cart.png">
-                    <div class="subtitle remove-all">clean</div>
+                    <div class="subtitle remove-all">clear</div>
                 </div>
                 <div class="sidebar__cart_info">
                     <p class="text text_italized empty-cart">No items in cart</p>
@@ -33,49 +33,55 @@
             <div class="sidebar__filters">
                 <div class="filters__categories">
                     <p class="subtitle">Categories</p>
-                    <div class="filters__categories_checkbox">
-                        <div>
-                            <input type="checkbox" id="new-arrivals" name="new-arrivals">
-                            <label for="new-arrivals" class="text">New arrivals</label>
-                        </div>
-                        <div>
-                            <input type="checkbox" id="printed-dress" name="printed-dress">
-                            <label for="printed-dress" class="text">Printed dresses</label>
-                        </div>
-                        <div>
-                            <input type="checkbox" id="plain-dress" name="plain-dress">
-                            <label for="plain-dress" class="text">Plain dresses</label>
-                        </div>
-                        <div>
-                            <input type="checkbox" id="long-sleeved" name="long-sleeved">
-                            <label for="long-sleeved" class="text">Long sleeved</label>
-                        </div>
-                    </div>
+                    <form class="filters__categories_checkbox">
+                        <fieldset id="categories">
+                            <div>
+                                <input type="radio" id="show-all" name="category" value="show-all">
+                                <label for="show-all" class="text">Show all</label>
+                            </div>
+                            <div>
+                                <input type="radio" id="new-arrivals" name="category" value="new-arrivals">
+                                <label for="new-arrivals" class="text">New arrivals</label>
+                            </div>
+                            <div>
+                                <input type="radio" id="printed-dress" name="category" value="printed-dress">
+                                <label for="printed-dress" class="text">Printed dresses</label>
+                            </div>
+                            <div>
+                                <input type="radio" id="plain-dress" name="category" value="plain-dress">
+                                <label for="plain-dress" class="text">Plain dresses</label>
+                            </div>
+                            <div>
+                                <input type="radio" id="long-sleeved" name="category" value="long-sleeved">
+                                <label for="long-sleeved" class="text">Long sleeved</label>
+                            </div>
+                        </fieldset>
+                    </form>
                 </div>
                 <div class="filters__colors">
                     <p class="subtitle">Colors</p>
                     <div class="filters__colors_wrapper">
-                        <div class="filters__colors_block">
+                        <div class="filters__colors_block red">
                             <div class="color_circle color_circle_red"></div>
                             <div class="text">Red</div>
                         </div>
-                        <div class="filters__colors_block">
+                        <div class="filters__colors_block black">
                             <div class="color_circle color_circle_black"></div>
                             <div class="text">Black</div>
                         </div>
-                        <div class="filters__colors_block">
+                        <div class="filters__colors_block yellow">
                             <div class="color_circle color_circle_yellow"></div>
                             <div class="text">Yellow</div>
                         </div>
-                        <div class="filters__colors_block">
+                        <div class="filters__colors_block green">
                             <div class="color_circle color_circle_green"></div>
                             <div class="text">Green</div>
                         </div>
-                        <div class="filters__colors_block">
+                        <div class="filters__colors_block blue">
                             <div class="color_circle color_circle_blue"></div>
                             <div class="text">Blue</div>
                         </div>
-                        <div class="filters__colors_block">
+                        <div class="filters__colors_block white">
                             <div class="color_circle color_circle_white"></div>
                             <div class="text">White</div>
                         </div>
@@ -117,6 +123,7 @@
             <div class="products__sort">
                 <p class="subtitle">Sort by</p>
                 <select name="sort" class = 'sort_field'>
+                    <option value="none">None</option>
                     <option value="name-up">Name ↑</option>
                     <option value="name-down">Name ↓</option>
                     <option value="price-up">Price ↑</option>
