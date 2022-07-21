@@ -1,6 +1,10 @@
 
 import {CardsData} from './cards-data'
 
+import * as noUiSlider from 'nouislider';
+import 'nouislider/dist/nouislider.css';
+import { size } from 'lodash';
+
 let wrapper: any = document.querySelector(".products__wrapper");
 let colors = document.querySelectorAll('.filters__colors_block');
 
@@ -254,18 +258,58 @@ document.addEventListener("DOMContentLoaded", () => {
      })
 
      //SORT BY SIZE---------------------------------------------------------------------
-     let sizes = <HTMLInputElement><unknown>document.querySelectorAll('#size input')
+     let sizes = document.querySelector('#size')
 
+     sizes.addEventListener("change", ()=>{
+        let checked = document.querySelectorAll('#size input:checked')
+
+        removeCard();
+
+        checked.forEach(size =>{
+            console.log(size)
+
+            switch (size.id) {
+                case 'XS':
+                    let filterXS = CardsData.filter(el => {
+                        return el.sizes == 'XS'
+                    }) 
+                    createCard(filterXS)
+                    break;
+                
+                case 'S':
+                    let filterS = CardsData.filter(el => {
+                        return el.sizes == 'S'
+                    }) 
+                    createCard(filterS)
+                    break;
+                
+                case 'M':
+                    let filterM = CardsData.filter(el => {
+                        return el.sizes == 'M'
+                    }) 
+                    createCard(filterM)
+                    break;
+                
+                case 'L':
+                    let filterL = CardsData.filter(el => {
+                        return el.sizes == 'L'
+                    }) 
+                    createCard(filterL)
+                    break;
+                
+                case 'XL':
+                    let filterXL = CardsData.filter(el => {
+                        return el.sizes == 'XL'
+                    }) 
+                    createCard(filterXL)
+                    break;
+
+                default:
+                    break;
+            }
+        })
+     })
     
-        let sizesChecked = sizes.checked;
-     
-     
-     
-     let getSizes = CardsData.filter(function () {
-        return sizesChecked;
-    });
-    console.log(getSizes)
-     
         
 
     //  favorites -------------------------------------------------------------------------
@@ -454,5 +498,14 @@ function removeColorFilter(){
 }
 
 
+var slider = document.getElementById('slider');
 
+noUiSlider.create(slider, {
+    start: [20, 80],
+    connect: true,
+    range: {
+        'min': 30,
+        'max': 100
+    }
+});
     
