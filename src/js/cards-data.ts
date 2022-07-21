@@ -12,7 +12,7 @@ export const CardsData = [
         'alt': 'blue shoulder-off dress',
         'name': 'Blue shoulder-off dress',
         'category': 'plain dress',
-        'price': '35$',
+        'price': '35',
         'color': 'blue',
         'sizes': 'M'
     },
@@ -20,7 +20,7 @@ export const CardsData = [
         'alt': 'blue shirt dress',
         'name': 'Blue shirt dress',
         'category': 'long-sleeved dress',
-        'price': '40$',
+        'price': '40',
         'color': 'blue',
         'sizes': 'S'
     },
@@ -28,7 +28,7 @@ export const CardsData = [
         'alt': 'Striped long-sleeved dress',
         'name': 'Striped long-sleeved dress',
         'category': 'printed dress',
-        'price': '33$',
+        'price': '33',
         'color': 'white',
         'sizes': 'L'
     },
@@ -36,7 +36,7 @@ export const CardsData = [
         'alt': 'red dress',
         'name': 'Little red dress',
         'category': 'new arrival',
-        'price': '50$',
+        'price': '50',
         'color': 'red',
         'sizes': 'L'
     },
@@ -44,7 +44,7 @@ export const CardsData = [
         'alt': 'green dress',
         'name': 'Green shirt dress',
         'category': 'new arrival',
-        'price': '44$',
+        'price': '44',
         'color': 'green',
         'sizes': 'XS'
     },
@@ -52,7 +52,7 @@ export const CardsData = [
         'alt': 'yellow dress',
         'name': 'Yellow long-sleeved dress',
         'category': 'plain dress',
-        'price': '35$',
+        'price': '35',
         'color': 'yellow',
         'sizes': 'S'
     },
@@ -60,7 +60,7 @@ export const CardsData = [
         'alt': 'Striped long-sleeved dress',
         'name': 'Striped long-sleeved dress',
         'category': 'long-sleeved',
-        'price': '33$',
+        'price': '33',
         'color': 'white',
         'sizes': 'XL'
     },
@@ -68,7 +68,7 @@ export const CardsData = [
         'alt': 'long-sleeved dress',
         'name': 'Black and white dress',
         'category': 'long-sleeved',
-        'price': '80$',
+        'price': '80',
         'color': 'black',
         'sizes': 'M'
     }

@@ -107,8 +107,14 @@ fieldset{
             width: 50px;
         }
 
+        .price-wrapper{
+            @extend %flex;
+
+        }
+        
         .card__price_little{
-            color: purple
+            color: purple;
+            
         }
 
         .remove-from-card{
@@ -161,6 +167,19 @@ fieldset{
             .remove-all:hover{
                 background-color: purple;
                 color: white;
+            }
+        }
+
+        .total{
+            margin-left: 20%;
+            border-top: 1px solid gray;
+            // display: none;
+            @extend %flex;
+
+            .total__sum{
+                margin-left: 10px;
+                color: purple;
+                font-weight: 900;
             }
         }
 
@@ -361,7 +380,7 @@ fieldset{
                     @extend %flex;
                     justify-content: space-around;
                     background-color: white;
-                    height: 15%;
+                    height: 20%;
         
                     .card__price{
         
