@@ -20,9 +20,10 @@ function createCard(CardsData: string | any[]){
                     <div>
                         <p class="subtitle">${CardsData[k].name}</p>
                         <p class="text">${CardsData[k].category}</p>
+                        <p class="text">${CardsData[k].color}</p>
                         <p class="text" style = 'color: black'>${CardsData[k].sizes}</p>
                     </div>
-                    <div class="card__price">${CardsData[k].price}</div>
+                    <div class="card__price">${CardsData[k].price}$</div>
                 </div>
         </div>`;
 
@@ -38,9 +39,6 @@ function removeCard(){
     })
 }
 
-function removeColorActive(){
-    
-}
 
 document.addEventListener("DOMContentLoaded", () => {
         let products__favorites: any = document.querySelector('.products__favorites');
@@ -256,17 +254,17 @@ document.addEventListener("DOMContentLoaded", () => {
      })
 
      //SORT BY SIZE---------------------------------------------------------------------
-    //  let sizes = <HTMLInputElement><unknown>document.querySelectorAll('#size input')
+     let sizes = <HTMLInputElement><unknown>document.querySelectorAll('#size input')
 
     
-    //     let sizesChecked = sizes.checked;
+        let sizesChecked = sizes.checked;
      
      
      
-    //  let getSizes = CardsData.filter(function () {
-    //     return sizesChecked;
-    // });
-    // console.log(getSizes)
+     let getSizes = CardsData.filter(function () {
+        return sizesChecked;
+    });
+    console.log(getSizes)
      
         
 
@@ -358,7 +356,8 @@ function addToCart(k: any){
     let card_little = `<div class = "card_little">
         <img src="${CardsData[k].img}" alt="${CardsData[k].alt}" class = "card__img_little">
                 <div><p class="text">${CardsData[k].name}</p>
-                <div class="card__price_little">${CardsData[k].price}</div></div>
+                <div class="price-wrapper"><div class="card__price_little">${CardsData[k].price}</div>
+                <div>$</div></div></div>
        <div class='remove-from-card' onclick = 'clearCart()'>✖</div>
     </div>`;
 
@@ -366,13 +365,14 @@ function addToCart(k: any){
 
    countCards()
 
+   countSum();
+
    let cards_hover = document.querySelectorAll('.add_to_cart');
 
    cards_hover.forEach(add => {
     add.addEventListener('click', ()=>{
         add.parentElement.classList.add('opacity-appear');
         add.children[0].innerHTML = 'in cart';
-        
     })
    })
 
@@ -389,15 +389,34 @@ function countCards(){
     }
 }
 
+function countSum(){
+    let prices = document.querySelectorAll('.card__price_little');
+    let total_sum = document.querySelector('.total__sum');
+
+    let arr: number[] = [];
+    prices.forEach(el => {
+        let num = Number(el.innerHTML)
+        arr.push(num)
+    })
+    if(arr.length > 0){
+        let sum = arr.reduce(function(a,b){return a+b});
+        total_sum.innerHTML = `${sum}$`    
+    }
+    else
+    {total_sum.innerHTML = "" }
+}
+
 window.clearCart = clearCart;
 
 function clearCart(){
     let cardLittle = document.querySelector('.remove-from-card').parentElement;
 
     cardLittle.remove();
-    countCards()
+    countCards();
+    countSum();
 
     let counter = cartInfo.childElementCount;
+
     if(counter === 0){
         
         let cards_hover = document.querySelectorAll('.add_to_cart');
@@ -414,7 +433,7 @@ function clear(){
     document.querySelectorAll('.card_little').forEach(card =>{
         card.remove();
     })
-    countCards()
+    countCards();
 
     let cards_hover = document.querySelectorAll('.add_to_cart');
 
@@ -422,6 +441,9 @@ function clear(){
         add.parentElement.classList.remove('opacity-appear');
         add.children[0].innerHTML = 'add to cart';
        })
+
+       let total_sum = document.querySelector('.total__sum');
+       total_sum.innerHTML = '';
 }
 
 window.removeColorFilter = removeColorFilter;
