@@ -3,7 +3,6 @@ import {CardsData} from './cards-data'
 
 import * as noUiSlider from 'nouislider';
 import 'nouislider/dist/nouislider.css';
-import { size } from 'lodash';
 
 let wrapper: any = document.querySelector(".products__wrapper");
 let colors = document.querySelectorAll('.filters__colors_block');
@@ -266,7 +265,6 @@ document.addEventListener("DOMContentLoaded", () => {
         removeCard();
 
         checked.forEach(size =>{
-            console.log(size)
 
             switch (size.id) {
                 case 'XS':
@@ -308,6 +306,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     break;
             }
         })
+
+        if(checked.length == 0){
+            createCard(CardsData);
+        }
      })
     
         
@@ -498,14 +500,27 @@ function removeColorFilter(){
 }
 
 
-var slider = document.getElementById('slider');
+var slider = document.getElementById('slider') as noUiSlider.target;
 
 noUiSlider.create(slider, {
-    start: [20, 80],
+    start: [20, 100],
+    tooltips: true,
     connect: true,
     range: {
-        'min': 30,
+        'min': 20,
         'max': 100
     }
-});
     
+});
+
+const reset_slider = document.querySelector('.reset-slider');
+
+reset_slider.addEventListener('click', (e)=>{
+    slider.noUiSlider.reset();
+})
+
+
+slider.noUiSlider.on('update', function(values, handle){
+    console.log(values);
+    console.log(handle)
+})
