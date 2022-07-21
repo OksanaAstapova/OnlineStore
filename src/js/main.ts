@@ -1,78 +1,6 @@
-import img1 from '../assets/products/1.jpg'
-import img2 from '../assets/products/2.jpg'
-import img3 from '../assets/products/3.jpg'
-import img4 from '../assets/products/4.jpg'
-import img5 from '../assets/products/5.jpg'
-import img6 from '../assets/products/6.jpg'
-import img7 from '../assets/products/7.jpg'
-import img8 from '../assets/products/8.jpg'
 
-const CardsData = [
-    {   'img': img1,
-        'alt': 'blue shoulder-off dress',
-        'name': 'Blue shoulder-off dress',
-        'category': 'plain dress',
-        'price': '35$',
-        'color': 'blue',
-        'sizes': ['S', 'M', 'L']
-    },
-    {   'img': img2,
-        'alt': 'blue shirt dress',
-        'name': 'Blue shirt dress',
-        'category': 'long-sleeved dress',
-        'price': '40$',
-        'color': 'blue',
-        'sizes': ['S', 'M', 'L', 'XL']
-    },
-    {   'img': img3,
-        'alt': 'Striped long-sleeved dress',
-        'name': 'Striped long-sleeved dress',
-        'category': 'printed dress',
-        'price': '33$',
-        'color': 'white',
-        'sizes': ['S', 'M', 'L', 'XL']
-    },
-    {   'img': img4,
-        'alt': 'red dress',
-        'name': 'Little red dress',
-        'category': 'new arrival',
-        'price': '50$',
-        'color': 'red',
-        'sizes': ['L', 'XL']
-    },
-    {   'img': img5,
-        'alt': 'green dress',
-        'name': 'Green shirt dress',
-        'category': 'new arrival',
-        'price': '44$',
-        'color': 'green',
-        'sizes': ['XS', 'S']
-    },
-    {   'img': img6,
-        'alt': 'yellow dress',
-        'name': 'Yellow long-sleeved dress',
-        'category': 'plain dress',
-        'price': '35$',
-        'color': 'yellow',
-        'sizes': 'S'
-    },
-    {   'img': img7,
-        'alt': 'Striped long-sleeved dress',
-        'name': 'Striped long-sleeved dress',
-        'category': 'long-sleeved',
-        'price': '33$',
-        'color': 'white',
-        'sizes': ['XS', 'S', 'M', 'XL']
-    },
-    {   'img': img8,
-        'alt': 'long-sleeved dress',
-        'name': 'Black and white dress',
-        'category': 'long-sleeved',
-        'price': '80$',
-        'color': 'black',
-        'sizes': ['M', 'XL']
-    }
-]
+import {CardsData} from './cards-data'
+
 let wrapper: any = document.querySelector(".products__wrapper");
 let colors = document.querySelectorAll('.filters__colors_block');
 
@@ -326,6 +254,20 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         )
      })
+
+     //SORT BY SIZE---------------------------------------------------------------------
+    //  let sizes = <HTMLInputElement><unknown>document.querySelectorAll('#size input')
+
+    
+    //     let sizesChecked = sizes.checked;
+     
+     
+     
+    //  let getSizes = CardsData.filter(function () {
+    //     return sizesChecked;
+    // });
+    // console.log(getSizes)
+     
         
 
     //  favorites -------------------------------------------------------------------------
@@ -405,8 +347,6 @@ window.addToCart = addToCart;
 
 let clearAll = document.querySelector<HTMLElement>('.remove-all');
 let cartInfo = document.querySelector('.sidebar__cart_info');
-let emptyCart = document.querySelector<HTMLElement>('.empty-cart');
-
 
 function addToCart(k: any){
 
@@ -414,19 +354,27 @@ function addToCart(k: any){
     clearAll.style.display = 'flex';
     clearAll.addEventListener('click', clear)
 
-    emptyCart.style.visibility = 'hidden';
-
     let card_little = `<div class = "card_little">
         <img src="${CardsData[k].img}" alt="${CardsData[k].alt}" class = "card__img_little">
                 <div><p class="text">${CardsData[k].name}</p>
                 <div class="card__price_little">${CardsData[k].price}</div></div>
-       <div class='remove-from-card' onclick = 'removeCard()'>✖</div>
+       <div class='remove-from-card' onclick = 'clearCart()'>✖</div>
     </div>`;
 
     cartInfo.innerHTML += card_little;
 
-   
+   countCards()
 
+}
+
+function countCards(){
+    let quantity = document.querySelector('.cards-quantity');
+    let counter = cartInfo.childElementCount;
+    quantity.innerHTML = `${counter}`
+    if(counter === 0){
+        clearAll.style.display = "none";
+        quantity.innerHTML = ''
+    }
 }
 
 window.clearCart = clearCart;
@@ -434,16 +382,17 @@ window.clearCart = clearCart;
 function clearCart(){
     let cardLittle = document.querySelector('.remove-from-card').parentElement;
 
-    cardLittle.style.display = 'none';
+    cardLittle.remove();
+    countCards()
+
 }
 
 function clear(){
     clearAll.style.display = 'none';
-    emptyCart.style.visibility = 'visible';
-
     document.querySelectorAll('.card_little').forEach(card =>{
         card.remove();
     })
+    countCards()
 }
 
 window.removeColorFilter = removeColorFilter;
@@ -451,10 +400,6 @@ window.removeColorFilter = removeColorFilter;
 function removeColorFilter(){
     removeCard();
     createCard(CardsData);
-
-    colors.forEach(color => {
-        
-    })
 }
 
 
