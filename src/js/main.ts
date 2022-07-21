@@ -348,6 +348,7 @@ window.addToCart = addToCart;
 let clearAll = document.querySelector<HTMLElement>('.remove-all');
 let cartInfo = document.querySelector('.sidebar__cart_info');
 
+
 function addToCart(k: any){
 
 
@@ -365,7 +366,18 @@ function addToCart(k: any){
 
    countCards()
 
+   let cards_hover = document.querySelectorAll('.add_to_cart');
+
+   cards_hover.forEach(add => {
+    add.addEventListener('click', ()=>{
+        add.parentElement.classList.add('opacity-appear');
+        add.children[0].innerHTML = 'in cart';
+        
+    })
+   })
+
 }
+
 
 function countCards(){
     let quantity = document.querySelector('.cards-quantity');
@@ -385,6 +397,16 @@ function clearCart(){
     cardLittle.remove();
     countCards()
 
+    let counter = cartInfo.childElementCount;
+    if(counter === 0){
+        
+        let cards_hover = document.querySelectorAll('.add_to_cart');
+        cards_hover.forEach(add => {
+        add.parentElement.classList.remove('opacity-appear');
+        add.children[0].innerHTML = 'add to cart';
+       })
+    }
+
 }
 
 function clear(){
@@ -393,6 +415,13 @@ function clear(){
         card.remove();
     })
     countCards()
+
+    let cards_hover = document.querySelectorAll('.add_to_cart');
+
+    cards_hover.forEach(add => {
+        add.parentElement.classList.remove('opacity-appear');
+        add.children[0].innerHTML = 'add to cart';
+       })
 }
 
 window.removeColorFilter = removeColorFilter;
