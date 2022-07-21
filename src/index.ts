@@ -6,4 +6,3 @@ import './js/main.ts'
 
 
 
-console.log('qqqqqqq')
