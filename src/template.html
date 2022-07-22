@@ -15,7 +15,7 @@
         </ul>
         <div class="header__bar">
             <img class="favorites" src="favs.png">
-            <img class="search" src="search.png">
+            <img class="search-btn" src="search.png">
         </div>
     </header>
     <main class="main">
@@ -132,7 +132,9 @@
             </div>
         </aside>
         <section class="products">
-            <div class="products__favorites"></div>
+            <div class="products__favorites">
+                <p class='text no-favs' style = 'font-style: italic;'>You haven't chosen your favorite products yet</p>
+            </div>
             <div class="products__sort">
                 <p class="subtitle">Sort by</p>
                 <select name="sort" class = 'sort_field'>
@@ -142,6 +144,7 @@
                     <option value="price-up">Price ↑</option>
                     <option value="price-down">Price ↓</option>
                 </select>
+                <input type="search" id="search" class="search-bar" placeholder="Search.." data-search autofocus></input>
             </div>
             <div class="products__wrapper">
             </div>

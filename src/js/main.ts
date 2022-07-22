@@ -11,12 +11,14 @@ let colors = document.querySelectorAll('.filters__colors_block');
 function createCard(CardsData: string | any[]){
 
     for(let k=0; k<CardsData.length; k++){
-        let card = `<div class = "card">
-        <img class="card__favs" src="favs.png">
+        let card: any = `<div class = "card">
+        <img class="card__favs" src="favs.png" onclick = 'addToFavs(${k})'>
         <div class = 'card__hover_wrapper'>
             <img src="${CardsData[k].img}" alt="${CardsData[k].alt}" class = "card__img">
             <div class = 'card__hover'>
-                <div class = 'add_to_cart' onclick = 'addToCart(${k})'><p class = 'subtitle'>Add to cart</p></div>
+                <div class = 'add_to_cart' onclick = 'addToCart(${k})'>
+                <p class = 'subtitle'>Add to cart</p>
+                </div>
             </div>
         </div>
         <div class="card__info">
@@ -31,9 +33,11 @@ function createCard(CardsData: string | any[]){
         </div>`;
 
         wrapper.innerHTML += card;
-
-            
+        addHover();
+        addFavs();
+        
     }
+
 }
 
 function removeCard(){
@@ -315,8 +319,93 @@ document.addEventListener("DOMContentLoaded", () => {
         
 
     //  favorites -------------------------------------------------------------------------
+ 
+        var favorites: any = document.querySelector('.favorites');
 
-       let card__favs = document.querySelectorAll('.card__favs');
+
+        favorites.addEventListener('click', ()=>{
+
+            favorites.classList.toggle('favs-active');
+            favorites.src = 'favs2.png';
+            var card__favs_active: any = document.querySelectorAll('.card__favs_active');
+            console.log(card__favs_active)
+
+            if (favorites.classList.contains('favs-active')){
+
+                favorites.src = 'favs2.png';
+
+                if(card__favs_active.length == 0){
+                    products__favorites.style.display = 'flex';
+                   products__favorites.innerHTML = 
+                `<p class='text no-favs' style = 'font-style: italic;'
+                >You haven't chosen your favorite products yet</p>`
+                  
+            }else {
+                    products__favorites.style.display = 'flex';
+                    
+                    if(products__favorites.firstChild.classList.contains('no-favs') && products__favorites.childElementCount > 1)
+                    document.querySelector('.no-favs').remove();
+                    
+            }
+            }
+            else{
+                favorites.src = 'favs.png';
+                products__favorites.style.display = 'none';
+
+               
+            }
+            
+
+    })
+    window.addToFavs = addToFavs;
+
+    function addToFavs(k: any){
+        console.log(k)
+        let card = `<div class = "card">
+        <img class="card__favs" src="favs2.png">
+        <div class = 'card__hover_wrapper'>
+            <img src="${CardsData[k].img}" alt="${CardsData[k].alt}" class = "card__img">
+            <div class = 'card__hover'>
+                <div class = 'add_to_cart' onclick = 'addToCart(${k})'>
+                <p class = 'subtitle'>Add to cart</p>
+                </div>
+            </div>
+        </div>
+        <div class="card__info">
+                    <div>
+                        <p class="subtitle">${CardsData[k].name}</p>
+                        <p class="text">${CardsData[k].category}</p>
+                        <p class="text">${CardsData[k].color}</p>
+                        <p class="text" style = 'color: black'>${CardsData[k].sizes}</p>
+                    </div>
+                    <div class="card__price">${CardsData[k].price}$</div>
+                </div>
+        </div>`;
+    
+        products__favorites.innerHTML += card;
+
+        addHover();
+        
+    }
+
+})
+
+function addHover(){
+    let cards_hover = document.querySelectorAll('.add_to_cart');
+
+    cards_hover.forEach(add => {
+     add.addEventListener('click', ()=>{
+         add.parentElement.classList.add('opacity-appear');
+         add.children[0].innerHTML = 'in cart';
+         add.classList.add('in_cart')
+         console.log(add)
+     })
+    })
+
+}
+
+function addFavs(){
+    let card__favs = document.querySelectorAll('.card__favs');
 
        for (let i = 0; i < card__favs.length; i++) {
         const el = <HTMLImageElement>card__favs[i];
@@ -332,59 +421,18 @@ document.addEventListener("DOMContentLoaded", () => {
             else el.src = 'favs.png'
         });
     }
+}
 
-        var favorites: any = document.querySelector('.favorites');
 
-
-        favorites.addEventListener('click', ()=>{
-
-            favorites.classList.toggle('favs-active');
-            favorites.src = 'favs2.png';
-            var card__favs_active: any = document.querySelectorAll('.card__favs_active');
-
-            if (favorites.classList.contains('favs-active')){
-
-                products__favorites.style.display = 'flex';
-                favorites.src = 'favs2.png';
-
-                for (let i = 0; i < card__favs_active.length; i++) {
-
-                    let element_wrapper = `<div class = "card" onclick = ${i}>
-                    <div class="card__favs"></div>
-                    <img src="${CardsData[i].img}" alt="${CardsData[i].alt}" class = "card__img">
-                    <div class="card__info">
-                                <div>
-                                    <p class="subtitle">${CardsData[i].name}</p>
-                                    <p class="text">${CardsData[i].category}</p>
-                                    <p class="text" style = 'color: black'>${CardsData[i].sizes}</p>
-                                </div>
-                                <div class="card__price">${CardsData[i].price}</div>
-                            </div>
-                    </div>`;
-                            
-                    products__favorites.innerHTML += element_wrapper;
-                    
-                }
-            }
-            else{
-                favorites.src = 'favs.png';
-                products__favorites.style.display = 'none';
-                products__favorites.innerHTML = '';
-
-               
-            }
-            
-
-    })
-})
 
 // ADD TO CART----------------------------------------------------------------------
 
 declare global {
     interface Window { addToCart: any; }
+    interface Window { addToFavs: any; }
     interface Window { clearCart: any; }
     interface Window { removeColorFilter: any; }
-
+   
 }
 
 window.addToCart = addToCart;
@@ -413,17 +461,7 @@ function addToCart(k: any){
 
    countSum();
 
-   let cards_hover = document.querySelectorAll('.add_to_cart');
-
-   cards_hover.forEach(add => {
-    add.addEventListener('click', ()=>{
-        add.parentElement.classList.add('opacity-appear');
-        add.children[0].innerHTML = 'in cart';
-    })
-   })
-
 }
-
 
 function countCards(){
     let quantity = document.querySelector('.cards-quantity');
@@ -469,6 +507,8 @@ function clearCart(){
         cards_hover.forEach(add => {
         add.parentElement.classList.remove('opacity-appear');
         add.children[0].innerHTML = 'add to cart';
+        add.classList.remove('in_cart');
+
        })
     }
 
@@ -486,7 +526,9 @@ function clear(){
     cards_hover.forEach(add => {
         add.parentElement.classList.remove('opacity-appear');
         add.children[0].innerHTML = 'add to cart';
-       })
+        add.classList.remove('in_cart')
+
+    })
 
        let total_sum = document.querySelector('.total__sum');
        total_sum.innerHTML = '';
@@ -499,6 +541,7 @@ function removeColorFilter(){
     createCard(CardsData);
 }
 
+// noUiSlider---------------------------------------------------------
 
 var slider = document.getElementById('slider') as noUiSlider.target;
 
@@ -521,6 +564,28 @@ reset_slider.addEventListener('click', (e)=>{
 
 
 slider.noUiSlider.on('update', function(values, handle){
-    console.log(values);
-    console.log(handle)
+    // console.log(values);
+    // console.log(handle)
+})
+
+//search---------------------------------------------------------------------------------------------
+
+const searchInput = document.querySelector('[data-search]');
+const searchBtn = document.querySelector('.search-btn');
+
+searchBtn.addEventListener('click', ()=> {
+    console.log('1')
+    searchInput.classList.toggle('display-flex')
+    searchBtn.classList.toggle('search-btn_active')
+})
+
+searchInput.addEventListener('input', (e)=>{
+    const value = (e.target as HTMLTextAreaElement).value.toLowerCase();
+
+    document.querySelectorAll('.card').forEach(card => {
+
+        let name = card.children[2].children[0].children[0].innerHTML.toLowerCase();
+        let isVisible = name.includes(value);
+        card.classList.toggle('display-none', !isVisible);
+    })
 })
