@@ -77,7 +77,7 @@ $font: 'Open Sans', sans-serif;
         }
 
         .favs-active{
-            background-image: url(../assets/icons/favs2.png);
+            background-color: plum;
 
         }
 
@@ -534,6 +534,7 @@ fieldset{
 .no-favs{
 font-size: larger;
 margin: 20%;
+display: none;
 
 }
 .display-flex{

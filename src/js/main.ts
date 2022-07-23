@@ -6,13 +6,14 @@ import 'nouislider/dist/nouislider.css';
 
 let wrapper: any = document.querySelector(".products__wrapper");
 let colors = document.querySelectorAll('.filters__colors_block');
+let cards = document.querySelectorAll('.card');
 
 
 function createCard(CardsData: string | any[]){
 
     for(let k=0; k<CardsData.length; k++){
         let card: any = `<div class = "card">
-        <img class="card__favs" src="favs.png" onclick = 'addToFavs(${k})'>
+        <img class="card__favs" src="favs.png">
         <div class = 'card__hover_wrapper'>
             <img src="${CardsData[k].img}" alt="${CardsData[k].alt}" class = "card__img">
             <div class = 'card__hover'>
@@ -48,18 +49,20 @@ function removeCard(){
 
 
 document.addEventListener("DOMContentLoaded", () => {
-        let products__favorites: any = document.querySelector('.products__favorites');
-            products__favorites.style.display = 'none';
 
         createCard(CardsData);
 
         // Sort ---------------------------------------------------------------------
+    cards.forEach(card => {
+        let name = card.children[2].children[0].children[0].innerHTML.toLowerCase();
 
+    })
     let sort = <HTMLInputElement>document.querySelector('.sort_field');
 
     sort.addEventListener('change', ()=>{
 
         let option = sort.value;
+        
 
         switch (option) {
             case 'name-up':
@@ -320,74 +323,37 @@ document.addEventListener("DOMContentLoaded", () => {
 
     //  favorites -------------------------------------------------------------------------
  
-        var favorites: any = document.querySelector('.favorites');
-
+        let favorites: any = document.querySelector('.favorites');
+        let card__favs = document.querySelectorAll('.card__favs');
+        let favs_active = document.querySelectorAll('.card__favs_active');
+        let no_favs = document.querySelector('.no-favs')
 
         favorites.addEventListener('click', ()=>{
-
             favorites.classList.toggle('favs-active');
-            favorites.src = 'favs2.png';
-            var card__favs_active: any = document.querySelectorAll('.card__favs_active');
-            console.log(card__favs_active)
 
             if (favorites.classList.contains('favs-active')){
+                let favs_active = document.querySelectorAll('.card__favs_active');
 
-                favorites.src = 'favs2.png';
+                for (let i = 0; i < card__favs.length; i++) {
+                    const fav = card__favs[i];
+                    let isFav = fav.classList.contains('card__favs_active');
+                    fav.parentElement.classList.toggle('display-none', !isFav);
+                }
+                if(favs_active.length == 0){console.log('no')
+                no_favs.classList.add('display-flex');
 
-                if(card__favs_active.length == 0){
-                    products__favorites.style.display = 'flex';
-                   products__favorites.innerHTML = 
-                `<p class='text no-favs' style = 'font-style: italic;'
-                >You haven't chosen your favorite products yet</p>`
-                  
-            }else {
-                    products__favorites.style.display = 'flex';
-                    
-                    if(products__favorites.firstChild.classList.contains('no-favs') && products__favorites.childElementCount > 1)
-                    document.querySelector('.no-favs').remove();
-                    
+            } 
             }
-            }
-            else{
-                favorites.src = 'favs.png';
-                products__favorites.style.display = 'none';
+            else {
+                document.querySelector('.no-favs').classList.remove('display-flex');
 
-               
+                for (let i = 0; i < card__favs.length; i++) {
+                    const fav = card__favs[i];
+                    fav.parentElement.classList.remove('display-none');
+                }
             }
-            
-
     })
-    window.addToFavs = addToFavs;
-
-    function addToFavs(k: any){
-        console.log(k)
-        let card = `<div class = "card">
-        <img class="card__favs" src="favs2.png">
-        <div class = 'card__hover_wrapper'>
-            <img src="${CardsData[k].img}" alt="${CardsData[k].alt}" class = "card__img">
-            <div class = 'card__hover'>
-                <div class = 'add_to_cart' onclick = 'addToCart(${k})'>
-                <p class = 'subtitle'>Add to cart</p>
-                </div>
-            </div>
-        </div>
-        <div class="card__info">
-                    <div>
-                        <p class="subtitle">${CardsData[k].name}</p>
-                        <p class="text">${CardsData[k].category}</p>
-                        <p class="text">${CardsData[k].color}</p>
-                        <p class="text" style = 'color: black'>${CardsData[k].sizes}</p>
-                    </div>
-                    <div class="card__price">${CardsData[k].price}$</div>
-                </div>
-        </div>`;
     
-        products__favorites.innerHTML += card;
-
-        addHover();
-        
-    }
-
 })
 
 function addHover(){
@@ -406,19 +372,30 @@ function addHover(){
 
 function addFavs(){
     let card__favs = document.querySelectorAll('.card__favs');
+    let favs_active = document.querySelectorAll('.card__favs_active');
+
 
        for (let i = 0; i < card__favs.length; i++) {
         const el = <HTMLImageElement>card__favs[i];
 
         el.addEventListener('click', () => {
-            el.classList.toggle('card__favs_active')
-            el.src = 'favs2.png'
+            el.classList.toggle('card__favs_active');
+            el.src = 'favs2.png';
 
             if (el.classList.contains('card__favs_active')){
-                el.src = 'favs2.png'
+                el.src = 'favs2.png';
 
             }
-            else el.src = 'favs.png'
+            else {
+
+                el.src = 'favs.png';
+                el.parentElement.classList.add('display-none');
+                
+                if(favs_active.length == 0){
+                document.querySelector('.no-favs').classList.add('display-flex');
+
+                }
+            }
         });
     }
 }
@@ -429,7 +406,6 @@ function addFavs(){
 
 declare global {
     interface Window { addToCart: any; }
-    interface Window { addToFavs: any; }
     interface Window { clearCart: any; }
     interface Window { removeColorFilter: any; }
    
