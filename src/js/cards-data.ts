@@ -60,7 +60,7 @@ export const CardsData = [
         'alt': 'yellow dress',
         'name': 'yellow long-sleeved dress',
         'category': 'plain dress',
-        'price': '35',
+        'price': '38',
         'color': 'yellow',
         'sizes': 'S'
     },
@@ -69,7 +69,7 @@ export const CardsData = [
         'alt': 'Stripped long-sleeved dress',
         'name': 'stripped long-sleeved dress',
         'category': 'long-sleeved',
-        'price': '33',
+        'price': '30',
         'color': 'white',
         'sizes': 'XL'
     },
@@ -86,7 +86,7 @@ export const CardsData = [
         'img': img9,
         'alt': 'coral dress',
         'name': 'amazing coral dress',
-        'category': 'plain',
+        'category': 'plain dress',
         'price': '65',
         'color': 'red',
         'sizes': 'L'

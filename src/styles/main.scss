@@ -270,6 +270,7 @@ fieldset{
             flex-wrap: wrap;
             gap: 20px;
             padding: 20px;
+            
 
             .card__info{
 
@@ -325,6 +326,7 @@ fieldset{
 
             .card{
                 margin-top: 3%;
+                flex-direction: column;
 
                 .card__hover_wrapper{
                     

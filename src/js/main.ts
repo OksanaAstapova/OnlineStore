@@ -3,16 +3,16 @@ import {CardsData} from './cards-data'
 
 import * as noUiSlider from 'nouislider';
 import 'nouislider/dist/nouislider.css';
+import { stubString } from 'lodash';
 
 let wrapper: any = document.querySelector(".products__wrapper");
 let colors = document.querySelectorAll('.filters__colors_block');
-let cards = document.querySelectorAll('.card');
 
 
 function createCard(CardsData: string | any[]){
 
     for(let k=0; k<CardsData.length; k++){
-        let card: any = `<div class = "card">
+        let card: any = `<div class = "card" id='${CardsData[k].id}'>
         <img class="card__favs" src="favs.png">
         <div class = 'card__hover_wrapper'>
             <img src="${CardsData[k].img}" alt="${CardsData[k].alt}" class = "card__img">
@@ -24,7 +24,7 @@ function createCard(CardsData: string | any[]){
         </div>
         <div class="card__info">
                     <div>
-                        <p class="subtitle">${CardsData[k].name}</p>
+                        <p class="subtitle name">${CardsData[k].name}</p>
                         <p class="text">${CardsData[k].category}</p>
                         <p class="text">${CardsData[k].color}</p>
                         <p class="text" style = 'color: black'>${CardsData[k].sizes}</p>
@@ -41,58 +41,73 @@ function createCard(CardsData: string | any[]){
 
 }
 
-function removeCard(){
-    document.querySelectorAll('.card').forEach(card =>{
-        card.remove();
-    })
-}
-
-
 document.addEventListener("DOMContentLoaded", () => {
 
         createCard(CardsData);
 
-        // Sort ---------------------------------------------------------------------
-    cards.forEach(card => {
-        let name = card.children[2].children[0].children[0].innerHTML.toLowerCase();
+// Sort ---------------------------------------------------------------------
 
-    })
     let sort = <HTMLInputElement>document.querySelector('.sort_field');
 
     sort.addEventListener('change', ()=>{
 
         let option = sort.value;
         
-
         switch (option) {
             case 'name-up':
-                CardsData.sort((a, b) => a.name > b.name ? 1 : -1);
-                
-                break;
+                var cards = document.querySelectorAll('.card');
+
+                Array.from(cards as unknown as HTMLCollectionOf<HTMLElement> ).sort((a: any,b: any): any => {
+                    a = a.querySelector('.name').innerText.toLowerCase();
+                    b = b.querySelector('.name').innerText.toLowerCase();
+                    return  b > a ? -1 : 1;
+                }).forEach(function(n: any, i) {
+                    n as HTMLElement;
+                    n.style.order = i
+                  })
+                                
+            break;
 
             case 'name-down':
-                CardsData.sort((a, b) => b.name > a.name ? 1 : -1);
-                
-                break;
+                var cards = document.querySelectorAll('.card');
+
+                Array.from(cards as unknown as HTMLCollectionOf<HTMLElement> ).sort((a: any,b: any): any => {
+                    a = a.querySelector('.name').innerText.toLowerCase();
+                    b = b.querySelector('.name').innerText.toLowerCase();
+                    return  b > a ? 1 : -1;
+                }).forEach(function(n: any, i) {
+                    n as HTMLElement;
+                    n.style.order = i
+                  })                
+            break;
 
             case 'price-up':
-                CardsData.sort((a, b) => a.price > b.price ? 1 : -1);
-                
-                break;
+                var cards = document.querySelectorAll('.card');
+
+                Array.from(cards as unknown as HTMLCollectionOf<HTMLElement> ).sort((a: any,b: any): any => {
+                    a = a.querySelector('.card__price').innerText;
+                    b = b.querySelector('.card__price').innerText;
+                    return  b > a ? -1 : 1;
+                }).forEach(function(n: any, i) {
+                    n as HTMLElement;
+                    n.style.order = i
+                  })        
+            break;
 
             case 'price-down':
-                CardsData.sort((a, b) => a.price < b.price ? 1 : -1);
-                break;
-                
-            default:
-                
-                break;
+                var cards = document.querySelectorAll('.card');
+
+                Array.from(cards as unknown as HTMLCollectionOf<HTMLElement> ).sort((a: any,b: any): any => {
+                    a = a.querySelector('.card__price').innerText;
+                    b = b.querySelector('.card__price').innerText;
+                    return  b > a ? 1 : -1;
+                }).forEach(function(n: any, i) {
+                    n as HTMLElement;
+                    n.style.order = i
+                  })                        
+            break;
             
         }
-
-        removeCard();
-                
-        createCard(CardsData);
      })
 
      // filter by category---------------------------------------------------
@@ -104,57 +119,43 @@ document.addEventListener("DOMContentLoaded", () => {
         let category = <HTMLInputElement>document.querySelector('#categories input:checked');
         let value = category.value
 
+        function filterCategory(name: string){
+            document.querySelectorAll('.card').forEach(card => {
+
+                let category = card.children[2].children[0].children[1].innerHTML;
+                let isCategory = category === name;
+                card.classList.toggle('display-none', !isCategory);
+            })
+        }
+
         switch (value) {
 
             case 'new-arrivals':
                 
-                removeCard();
-
-                let cardFilteredNew = CardsData.filter(el => {
-                    return el.category == 'new arrival'
-                })
-
-                createCard(cardFilteredNew)
+                filterCategory('new arrival');
                  
             break;
 
             case 'printed-dress':
-                removeCard();
-
-                let cardFilteredPrint = CardsData.filter(el => {
-                    return el.category == 'printed dress'
-                })
-    
-                createCard(cardFilteredPrint)
+                filterCategory('printed dress');
                 
                 break;
 
             case 'plain-dress':
-                removeCard();
-
-                let cardFilteredPlain = CardsData.filter(el => {
-                    return el.category == 'plain dress';
-                })
-    
-                createCard(cardFilteredPlain)
+                filterCategory('plain dress');
                 
             break;
 
             case 'long-sleeved':
-                removeCard();
-
-                let cardFilteredLong = CardsData.filter(el => {
-                    return el.category == 'long-sleeved'
-                    })
-    
-                    createCard(cardFilteredLong)
-                break;
+                filterCategory('long-sleeved');
+            break;
                 
             default:
-                removeCard();
-                
-               createCard(CardsData);
-                break;
+                document.querySelectorAll('.card').forEach(card => {
+
+                    card.classList.remove('display-none');
+                })
+            break;
             
         }
 
@@ -179,82 +180,50 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                 })
             }
+            function filterColor(value: string){
+                document.querySelectorAll('.card').forEach(card => {
+
+                    let category = card.children[2].children[0].children[2].innerHTML;
+                    let isCategory = category === value;
+                    card.classList.toggle('display-none', !isCategory);
+                })
+                remove_color_active(value);
+            }
             
             switch (option) {
                 case 'filters__colors_block red':
 
-            
-                    removeCard();
+                    filterColor('red');
                     
-                    let cardFilteredRed = CardsData.filter(el => {
-                        return el.color == 'red'
-                    })
-
-                    createCard(cardFilteredRed)
-                    
-                    remove_color_active('red');
                 break;
 
                 case 'filters__colors_block black':
-                    removeCard();
                     
-                    let cardFilteredBlack = CardsData.filter(el => {
-                        return el.color == 'black'
-                    })
+                    filterColor('black');
 
-                    createCard(cardFilteredBlack);
-                    remove_color_active('black');
-                    
-
-                    break;
+                break;
 
                 case 'filters__colors_block yellow':
-                    removeCard();
                     
-                    let cardFilteredYellow = CardsData.filter(el => {
-                        return el.color == 'yellow'
-                    })
-
-                    createCard(cardFilteredYellow);
-                    remove_color_active('yellow');
+                    filterColor('yellow');
 
                 break;
 
                 case 'filters__colors_block green':
-                    removeCard();
                     
-                    let cardFilteredGreen = CardsData.filter(el => {
-                        return el.color == 'green'
-                    })
-
-                    createCard(cardFilteredGreen);
-                    remove_color_active('green');
+                    filterColor('green');
 
                 break;
                 
                 case 'filters__colors_block blue':
-                    removeCard();
-                    
-                    let cardFilteredBlue = CardsData.filter(el => {
-                        return el.color == 'blue'
-                    })
+                    filterColor('blue');
 
-                    createCard(cardFilteredBlue);
-                    remove_color_active('blue');
-
-                break;
+                 break;
 
                 case 'filters__colors_block white':
-                    removeCard();
-                    
-                    let cardFilteredWhite = CardsData.filter(el => {
-                        return el.color == 'white'
-                    })
+                    filterColor('white');
 
-                    createCard(cardFilteredWhite);
-                    remove_color_active('white');
-
-                break;
+                 break;
                 
             }
 
@@ -267,61 +236,71 @@ document.addEventListener("DOMContentLoaded", () => {
      let sizes = document.querySelector('#size')
 
      sizes.addEventListener("change", ()=>{
-        let checked = document.querySelectorAll('#size input:checked')
+        let checked = document.querySelectorAll('#size input:checked');
 
-        removeCard();
+        function filterSize(value: string){
+            document.querySelectorAll('.card').forEach(card => {
+
+                let category = card.children[2].children[0].children[3].innerHTML;
+                let isCategory = category === value;
+                let isNone = card.classList.contains('display-none');
+                let isShow = card.classList.contains('show');
+
+                if(!isNone && !isShow){
+                    if(!isCategory){card.classList.add('display-none')}
+                    else {
+                         card.classList.add('show')}
+                }else if(isCategory){
+                card.classList.remove('display-none')
+                card.classList.add('show')
+            }
+             
+            })
+        }
+
+        if(checked.length == 0){
+            document.querySelectorAll('.card').forEach(card =>{
+                card.classList.remove('display-none');
+                card.classList.remove('show');
+
+            })        
+        }else{
 
         checked.forEach(size =>{
-
+            
             switch (size.id) {
                 case 'XS':
-                    let filterXS = CardsData.filter(el => {
-                        return el.sizes == 'XS'
-                    }) 
-                    createCard(filterXS)
+                    
+                    if((size as HTMLInputElement).checked != true){
+                        console.log((size as HTMLInputElement).checked)
+                    }
+                    else 
+                    filterSize('XS');
                     break;
                 
                 case 'S':
-                    let filterS = CardsData.filter(el => {
-                        return el.sizes == 'S'
-                    }) 
-                    createCard(filterS)
+                    filterSize('S');
                     break;
                 
                 case 'M':
-                    let filterM = CardsData.filter(el => {
-                        return el.sizes == 'M'
-                    }) 
-                    createCard(filterM)
+                    filterSize('M');
                     break;
                 
                 case 'L':
-                    let filterL = CardsData.filter(el => {
-                        return el.sizes == 'L'
-                    }) 
-                    createCard(filterL)
+                    filterSize('L');
                     break;
                 
                 case 'XL':
-                    let filterXL = CardsData.filter(el => {
-                        return el.sizes == 'XL'
-                    }) 
-                    createCard(filterXL)
+                    filterSize('XL');
                     break;
 
                 default:
                     break;
             }
         })
-
-        if(checked.length == 0){
-            createCard(CardsData);
-        }
+    }
      })
-    
-        
-
-    //  favorites -------------------------------------------------------------------------
+     //  favorites -------------------------------------------------------------------------
  
         let favorites: any = document.querySelector('.favorites');
         let card__favs = document.querySelectorAll('.card__favs');
@@ -339,7 +318,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     let isFav = fav.classList.contains('card__favs_active');
                     fav.parentElement.classList.toggle('display-none', !isFav);
                 }
-                if(favs_active.length == 0){console.log('no')
+                if(favs_active.length == 0){
                 no_favs.classList.add('display-flex');
 
             } 
@@ -364,7 +343,6 @@ function addHover(){
          add.parentElement.classList.add('opacity-appear');
          add.children[0].innerHTML = 'in cart';
          add.classList.add('in_cart')
-         console.log(add)
      })
     })
 
@@ -372,10 +350,10 @@ function addHover(){
 
 function addFavs(){
     let card__favs = document.querySelectorAll('.card__favs');
-    let favs_active = document.querySelectorAll('.card__favs_active');
+    
 
 
-       for (let i = 0; i < card__favs.length; i++) {
+    for (let i = 0; i < card__favs.length; i++) {
         const el = <HTMLImageElement>card__favs[i];
 
         el.addEventListener('click', () => {
@@ -389,15 +367,22 @@ function addFavs(){
             else {
 
                 el.src = 'favs.png';
-                el.parentElement.classList.add('display-none');
-                
-                if(favs_active.length == 0){
-                document.querySelector('.no-favs').classList.add('display-flex');
+                let favorites: any = document.querySelector('.favorites');
+
+                if (favorites.classList.contains('favs-active')){
+                    el.parentElement.classList.add('display-none');
+                    let favs_active = document.querySelectorAll('.card__favs_active');
+                    if(favs_active.length == 0){
+                    document.querySelector('.no-favs').classList.add('display-flex');
 
                 }
+                }
+                
             }
         });
     }
+
+    
 }
 
 
@@ -423,12 +408,12 @@ function addToCart(k: any){
     clearAll.style.display = 'flex';
     clearAll.addEventListener('click', clear)
 
-    let card_little = `<div class = "card_little">
+    let card_little = `<div class = "card_little" id="${CardsData[k].id}">
         <img src="${CardsData[k].img}" alt="${CardsData[k].alt}" class = "card__img_little">
                 <div><p class="text">${CardsData[k].name}</p>
                 <div class="price-wrapper"><div class="card__price_little">${CardsData[k].price}</div>
                 <div>$</div></div></div>
-       <div class='remove-from-card' onclick = 'clearCart()'>✖</div>
+       <div class='remove-from-card'>✖</div>
     </div>`;
 
     cartInfo.innerHTML += card_little;
@@ -436,6 +421,55 @@ function addToCart(k: any){
    countCards()
 
    countSum();
+
+   let cards_remove = document.querySelectorAll('.remove-from-card');
+
+   cards_remove.forEach(btn =>{
+        btn.addEventListener('click', ()=>{
+            let cardCart = btn.parentElement;
+            cardCart.remove();
+            countCards();
+            countSum();
+
+            let counter = cartInfo.childElementCount;
+
+            if(counter === 0){
+            
+                let cards_hover = document.querySelectorAll('.add_to_cart');
+                cards_hover.forEach(add => {
+                    add.parentElement.classList.remove('opacity-appear');
+                    add.children[0].innerHTML = 'add to cart';
+                    add.classList.remove('in_cart');
+
+                })
+
+            }else{
+                let cart_cards = document.querySelectorAll('.card_little');
+                let count = 0;
+                
+                cart_cards.forEach(el => {
+                    if(el.id === cardCart.id){count++}
+                    else count = 0;
+                });
+
+                console.log(count)
+                
+                if(count === 0){
+                    document.querySelectorAll('.card').forEach(card =>{
+                        if(cardCart.id === card.id ){
+                            let btn = card.children[1].children[1].children[0];
+
+                            btn.parentElement.classList.remove('opacity-appear');
+                            btn.children[0].innerHTML = 'add to cart';
+                            btn.classList.remove('in_cart');
+                        }
+                    })
+                }
+                
+            }
+        })
+   
+    })
 
 }
 
@@ -466,30 +500,6 @@ function countSum(){
     {total_sum.innerHTML = "" }
 }
 
-window.clearCart = clearCart;
-
-function clearCart(){
-    let cardLittle = document.querySelector('.remove-from-card').parentElement;
-
-    cardLittle.remove();
-    countCards();
-    countSum();
-
-    let counter = cartInfo.childElementCount;
-
-    if(counter === 0){
-        
-        let cards_hover = document.querySelectorAll('.add_to_cart');
-        cards_hover.forEach(add => {
-        add.parentElement.classList.remove('opacity-appear');
-        add.children[0].innerHTML = 'add to cart';
-        add.classList.remove('in_cart');
-
-       })
-    }
-
-}
-
 function clear(){
     clearAll.style.display = 'none';
     document.querySelectorAll('.card_little').forEach(card =>{
@@ -513,8 +523,9 @@ function clear(){
 window.removeColorFilter = removeColorFilter;
 
 function removeColorFilter(){
-    removeCard();
-    createCard(CardsData);
+    document.querySelectorAll('.card').forEach(card => {
+        card.classList.remove('display-none')
+    })
 }
 
 // noUiSlider---------------------------------------------------------
@@ -539,10 +550,10 @@ reset_slider.addEventListener('click', (e)=>{
 })
 
 
-slider.noUiSlider.on('update', function(values, handle){
-    // console.log(values);
-    // console.log(handle)
-})
+// slider.noUiSlider.on('update', function(values, handle){
+//     // console.log(values);
+//     // console.log(handle)
+// })
 
 //search---------------------------------------------------------------------------------------------
 
@@ -550,7 +561,6 @@ const searchInput = document.querySelector('[data-search]');
 const searchBtn = document.querySelector('.search-btn');
 
 searchBtn.addEventListener('click', ()=> {
-    console.log('1')
     searchInput.classList.toggle('display-flex')
     searchBtn.classList.toggle('search-btn_active')
 })
