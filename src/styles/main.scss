@@ -40,9 +40,6 @@ $font: 'Open Sans', sans-serif;
     color: #676A74;
 }
 
-.text_italized{
-    font-style: italic;
-}
 
 .header{
     
@@ -68,7 +65,7 @@ $font: 'Open Sans', sans-serif;
 
         .favorites{
             
-            transition: .2s;
+            transition: .1s;
         }
 
         .favorites:hover{
@@ -76,21 +73,26 @@ $font: 'Open Sans', sans-serif;
         }
 
         .favorites:active{
-            transform: translateY(3px)
+            transform: translateY(1px)
         }
 
         .favs-active{
-            background-image: url(../assets/icons/favs2.png);
+            background-color: plum;
 
         }
 
-        // .search{
-        //     // background-image: url(search.png);
-        //     // background-position: center;
-        //     // width: 50px;
-        //     // height: 50px;
-        // }
+        .search-btn{
+            cursor: pointer;
+            transition: 0.1s;
+        }
+        .search-btn:active{
+         transform: translateY(1px);
+        }
+        .search-btn_active{
+        background-color: plum;        
     }
+    }
+
 }
 
 fieldset{
@@ -268,6 +270,7 @@ fieldset{
             flex-wrap: wrap;
             gap: 20px;
             padding: 20px;
+            
 
             .card__info{
 
@@ -294,6 +297,27 @@ fieldset{
            
         }
 
+        .search-bar{
+            width: 15vw;
+            height: 40px;
+            font-family: $font;
+            padding-left: 20px;
+            font-size: 1em;
+            position: absolute;
+            right: 0;
+            display: none;
+        }
+
+        
+        .search-bar:focus{
+            outline: none !important;
+            border: 2px solid purple;
+        }
+
+        .display-flex{
+            display: flex;
+        }
+
         .products__wrapper{
             @extend %flex;
             flex-wrap: wrap;
@@ -302,6 +326,7 @@ fieldset{
 
             .card{
                 margin-top: 3%;
+                flex-direction: column;
 
                 .card__hover_wrapper{
                     
@@ -343,6 +368,11 @@ fieldset{
                             background-color: #fff;
                             color: plum;
                             cursor: pointer;
+                        }
+
+                        .in_cart{
+                            background-color: #fff;
+                            color: plum;
                         }
                     }
 
@@ -426,5 +456,90 @@ fieldset{
 .reset-slider:active{
 
     transform: translateY(2px);
+}
+
+.card__hover_wrapper{
+                    
+    display: flex;
+    width: 333px;
+    height: 466px;
+
+    // .card__img{
+    //     position: relative;
+    // }
+
+    .card__hover{
+        width: 333px;
+        height: 466px;
+        position: absolute;
+        background-color: plum;
+        z-index: 1;
+        opacity: 0;
+        cursor: pointer;
+        @include transition(all 200ms ease-out);
+
+
+        .add_to_cart {
+            position: absolute;
+            top: 70%;
+            left: 50%;
+            width: 152px;
+            font-size: 16px;
+            margin-left: -78px;
+            border: 2px solid #fff;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+            opacity: 1;
+            @include transition(all 200ms ease-out);
+        }
+
+        .add_to_cart:hover{
+            background-color: #fff;
+            color: plum;
+            cursor: pointer;
+        }
+
+        .in_cart{
+            background-color: #fff;
+            color: plum;
+        }
+    }
+
+    .opacity-appear{
+        opacity: 0.8;
+    }
+    
+
+    .card__hover:hover{
+        opacity: 0.7;
+    }
+
+    .card__hover_active{
+        opacity: 0.7;
+    }
+
+}
+.card__favs{
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.card__favs_active{
+    background-image: url(../assets/icons/favs2.png);
+
+}
+
+.no-favs{
+font-size: larger;
+margin: 20%;
+display: none;
+
+}
+.display-flex{
+    display: flex;
 }
 
