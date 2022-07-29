@@ -23,12 +23,6 @@ $font: 'Open Sans', sans-serif;
     list-style: none;
 }
 
-.display-none{
-    display: none;
-}
-
-
-
 .subtitle{
     text-transform: uppercase;
     font-weight: 600;
@@ -59,17 +53,30 @@ $font: 'Open Sans', sans-serif;
     .header__bar{
 
         @extend %flex;
-        width: 15vw;
-        justify-content: space-around;
-        border-left:1px solid #eee;
+        width: 17vw;
+        -ms-flex-pack: distribute;
+        justify-content: right;
+        border-left: 1px solid #eee;
+        margin-right: 40px;
+
+        .header__bar_inner{
+            margin-top: 10px;
+            position: absolute;
+            right: 14vw;
+        }
 
         .favorites{
             
             transition: .1s;
+            position: absolute;
+            width: 40px;
+            z-index: 1;
         }
 
         .favorites:hover{
             cursor: pointer;
+            animation: heartbeat 1s infinite;
+
         }
 
         .favorites:active{
@@ -77,12 +84,13 @@ $font: 'Open Sans', sans-serif;
         }
 
         .favs-active{
-            background-color: plum;
+            background-color: rgba(254, 110, 254, 0.408);
 
         }
 
         .search-btn{
             cursor: pointer;
+            width: 65px;
             transition: 0.1s;
         }
         .search-btn:active{
@@ -103,7 +111,11 @@ fieldset{
     @extend %flex;
 
     .card_little{
-        @extend %flex; 
+        @extend %flex;
+        // width: 205px;
+        // margin-left: -300px;
+    
+
 
         .card__img_little{
             width: 50px;
@@ -128,12 +140,27 @@ fieldset{
         }
 
     }
+    .card-appear{
+        animation-duration: 0.5s;
+        animation-name: card;
+        animation-fill-mode: forwards;
+    
+    }
+    @keyframes card{
+        from{
+            margin-left: -300px;
+        }
+        to{
+            margin-left: 0px;
+        }
+    }
 
     .sidebar{
 
         @extend %flex;
         flex-direction: column;
         width: 20vw;
+        height: 85vh;
         border-right:1px solid #eee;
         margin-left: 3vw;
         gap: 3vh;
@@ -185,11 +212,28 @@ fieldset{
             }
         }
 
+        .fav-title{
+            writing-mode: vertical-lr; 
+            text-orientation: upright; 
+            text-transform: uppercase;
+            font-weight: 900;
+            color: plum;
+            font-size: 3em;
+            letter-spacing: -10px;
+            margin-left: 60px;
+            position: absolute;
+            z-index: 0;
+
+        }
+
         .sidebar__filters{
 
-            @extend %flex;
+            display:flex;
             flex-direction: column;
             gap: 3vh;
+            background-color: white;
+            z-index: 1;
+            position: absolute;
 
             .filters__colors_block{
                 
@@ -240,6 +284,22 @@ fieldset{
             }
             .color_active{
                 background-color: plum;
+                width: opx;
+                animation-duration: .7s;
+                animation-name: color-active;
+                animation-fill-mode: forwards;
+            
+            }
+            @keyframes color-active {
+                from{
+                    width: 0px;
+                    opacity: 0;
+                }
+                to{
+                    width:80%;
+                    opacity: 1;
+                }
+            }
             }
 
             .color_remove{
@@ -249,11 +309,17 @@ fieldset{
                margin-right: 10px;
                   }
 
+            .display-none{
+                display: none;
+            }
+
             .display-flex{
                 display: flex;
             }
+
         }
 
+        
     }
 
     .products{
@@ -298,14 +364,14 @@ fieldset{
         }
 
         .search-bar{
-            width: 15vw;
-            height: 40px;
+            width: 0px;
+            height: 50px;
+            opacity: 0;
             font-family: $font;
             padding-left: 20px;
             font-size: 1em;
             position: absolute;
             right: 0;
-            display: none;
         }
 
         
@@ -323,6 +389,7 @@ fieldset{
             flex-wrap: wrap;
             justify-content: space-around;
             width: 80vw;
+            min-height: 85vh;
 
             .card{
                 margin-top: 3%;
@@ -399,6 +466,24 @@ fieldset{
                     z-index: 2;
                 }
 
+                .card__favs:hover{
+                    animation: heartbeat 1s infinite;
+                }
+
+                @keyframes heartbeat {
+                    0% {
+                      transform: scale( 1 );
+                    }
+                    20% {
+                      transform: scale( 1.1 )
+                       
+                    }
+                    40% {
+                      transform: scale( 1.2 )
+                    //     
+                    }
+                   }
+
                 .card__favs_active{
                     background-image: url(../assets/icons/favs2.png);
 
@@ -427,18 +512,19 @@ fieldset{
         }
         
     }
-}
+
 
 #slider{
 
     margin-top: 40px;
     margin-right: 20px;
+    width: 145%;
 }
 
 .reset-slider{
 
     cursor: pointer;
-    width: 35%;
+    width: 50%;
     height: 25px;
     margin-left: 20%;
     margin-top: 30px;
@@ -533,13 +619,192 @@ fieldset{
 
 }
 
-.no-favs{
-font-size: larger;
-margin: 20%;
-display: none;
+.no-favs,
+.no-results{
+    margin: 20%;
+    font-size: 0px;
+    position: absolute;
+    bottom: 0;
+    
+}
+.appear{
+    animation-duration: .4s;
+    animation-name: no-appear;
+    animation-fill-mode: forwards;
+}
+@keyframes no-appear {
+    from{
+        bottom:0;
+        font-size: 0px;
+    }
+    to{
+        bottom: 100px;
+        font-size: 1.6em;
+    }
+}
 
+.hide{
+    animation-duration: .5s;
+    animation-name: favs;
+    animation-fill-mode: forwards;
+}
+@keyframes favs {
+   
+    from{
+        bottom: 100px;
+        font-size: 1.6em;
+    }
+    to{
+        bottom:300px;
+        font-size: 0px;
+    }
 }
 .display-flex{
     display: flex;
 }
 
+.search-appear{
+    animation-duration: .7s;
+    animation-name: search-appear;
+    animation-fill-mode: forwards;
+
+}
+@keyframes search-appear {
+    from{
+        width: 0px;
+        opacity: 0;
+    }
+    to{
+        width:20vw;
+        opacity: 1;
+    }
+}
+.search-disappear{
+    animation-duration: .7s;
+    animation-name: search-disappear;
+    animation-fill-mode: forwards;
+
+}
+@keyframes search-disappear {
+    from{
+        width: 20vw;
+        opacity: 1;
+    }
+    to{
+        width:1;
+        opacity: 20vw;
+    }
+}
+
+.red{
+    margin-right: 5px;
+    border-radius: 50%;
+    width: 15px;
+    height: 15px;
+    background-color: red;
+    border: 1px solid red;
+    color: rgba(0, 0, 0, 0)
+}
+
+.yellow{
+    margin-right: 5px;
+    border-radius: 50%;
+    width: 15px;
+    height: 15px;
+    background-color: yellow;
+    border: 1px solid yellow;
+    color: rgba(0, 0, 0, 0)
+}
+.blue{
+    margin-right: 5px;
+    border-radius: 50%;
+    width: 15px;
+    height: 15px;
+    background-color: blue;
+    border: 1px solid blue;
+    color: rgba(0, 0, 0, 0)
+}
+.green{
+    margin-right: 5px;
+    border-radius: 50%;
+    width: 15px;
+    height: 15px;
+    background-color: green;
+    border: 1px solid green;
+    color: rgba(0, 0, 0, 0)
+}
+.black{
+    margin-right: 5px;
+    border-radius: 50%;
+    width: 15px;
+    height: 15px;
+    background-color: black;
+    border: 1px solid black;
+    color: rgba(0, 0, 0, 0)
+}
+.white{
+    margin-right: 5px;
+    border-radius: 50%;
+    width: 15px;
+    height: 15px;
+    background-color: white;
+    border: 1px solid grey;
+    color: rgba(0, 0, 0, 0)
+}
+.display-none,
+.left-none,
+.right-none{
+    display: none;
+}
+
+.XS,
+.S,
+.M,
+.L,
+.XL{
+    display: flex;
+}
+
+.fav-counter{
+    position: absolute;
+    width: 40px;
+    text-align: center;
+    margin-top: 7px;
+    font-family: $font;
+    cursor: pointer;
+    z-index: 0;
+    font-weight: 900;
+}
+
+.searchBtn-disappear{
+    animation-duration: .7s;
+    animation-name: searchBtn-disappear;
+    animation-fill-mode: forwards;
+
+}
+@keyframes searchBtn-disappear {
+    from{
+        margin-right: 0px;
+        opacity: 1;
+    }
+    to{
+        margin-right:-80px;
+        opacity: 0;
+    }
+}
+.searchBtn-appear{
+    animation-duration: .7s;
+    animation-name: searchBtn-appear;
+    animation-fill-mode: forwards;
+
+}
+@keyframes searchBtn-appear {
+    from{
+        margin-right:-80px;
+        opacity: 0;
+    }
+    to{
+        margin-right: 0px;
+        opacity: 1;
+    }
+}

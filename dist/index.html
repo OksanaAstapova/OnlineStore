@@ -14,7 +14,7 @@
             <li>Contacts</li>
         </ul>
         <div class="header__bar">
-            <img class="favorites" src="favs.png">
+            <img class="favorites" src="favourite.png">
             <img class="search-btn" src="search.png">
         </div>
     </header>
@@ -65,32 +65,32 @@
                 <div class="filters__colors">
                     <p class="subtitle">Colors</p>
                     <div class="filters__colors_wrapper">
-                        <div class="filters__colors_block red">
+                        <div class="filters__colors_block _red">
                             <div class="color_circle color_circle_red"></div>
                             <div class="text">Red</div>
                             <div class="color_remove" onclick="removeColorFilter()">✖</div>
                         </div>
-                        <div class="filters__colors_block black">
+                        <div class="filters__colors_block _black">
                             <div class="color_circle color_circle_black"></div>
                             <div class="text">Black</div>
                             <div class="color_remove" onclick="removeColorFilter()">✖</div>
                         </div>
-                        <div class="filters__colors_block yellow">
+                        <div class="filters__colors_block _yellow">
                             <div class="color_circle color_circle_yellow"></div>
                             <div class="text">Yellow</div>
                             <div class="color_remove" onclick="removeColorFilter()">✖</div>
                         </div>
-                        <div class="filters__colors_block green">
+                        <div class="filters__colors_block _green">
                             <div class="color_circle color_circle_green"></div>
                             <div class="text">Green</div>
                             <div class="color_remove" onclick="removeColorFilter()">✖</div>
                         </div>
-                        <div class="filters__colors_block blue">
+                        <div class="filters__colors_block _blue">
                             <div class="color_circle color_circle_blue"></div>
                             <div class="text">Blue</div>
                             <div class="color_remove" onclick="removeColorFilter()">✖</div>
                         </div>
-                        <div class="filters__colors_block white">
+                        <div class="filters__colors_block _white">
                             <div class="color_circle color_circle_white"></div>
                             <div class="text">White</div>
                             <div class="color_remove" onclick="removeColorFilter()">✖</div>
@@ -132,9 +132,6 @@
             </div>
         </aside>
         <section class="products">
-            <div class="products__favorites">
-                <p class='text no-favs' style = 'font-style: italic;'>You haven't chosen your favorite products yet</p>
-            </div>
             <div class="products__sort">
                 <p class="subtitle">Sort by</p>
                 <select name="sort" class = 'sort_field'>
@@ -147,6 +144,8 @@
                 <input type="search" id="search" class="search-bar" placeholder="Search.." data-search autofocus></input>
             </div>
             <div class="products__wrapper">
+                <p class='text no-favs' style = 'font-style: italic;'>You haven't chosen your favorite products yet</p>
+                <p class='text no-results' style = 'font-style: italic;'>No searching results</p>
             </div>
         </section>
     </main>
