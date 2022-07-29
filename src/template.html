@@ -14,18 +14,20 @@
             <li>Contacts</li>
         </ul>
         <div class="header__bar">
-            <img class="favorites" src="favourite.png">
+            <div class="header__bar_inner">
+                <img class="favorites" src="favourite.png">
+                <div class="fav-counter"></div></div>
             <img class="search-btn" src="search.png">
         </div>
     </header>
     <main class="main">
         <aside class="sidebar">
-            <div class="sidebar__cart">
+            <div class="sidebar__cart" style = 'background-color: white;'>
                 <div class="sidebar__cart_title">
                     <p class="subtitle">Cart</p>
                     <img class="cart-icon" src="cart.png">
                     <div class="cards-quantity"></div>
-                    <div class="subtitle remove-all">clear</div>
+                    <div class="subtitle remove-all" id="clear">clear</div>
                 </div>
                 <div class="sidebar__cart_info">
                 </div>
@@ -34,100 +36,103 @@
                     <div class="total__sum"></div>
                 </div>
             </div>
-            <div class="sidebar__filters">
-                <div class="filters__categories">
-                    <p class="subtitle">Categories</p>
-                    <form class="filters__categories_checkbox">
-                        <fieldset id="categories">
-                            <div>
-                                <input type="radio" id="show-all" name="category" value="show-all">
-                                <label for="show-all" class="text">Show all</label>
-                            </div>
-                            <div>
-                                <input type="radio" id="new-arrivals" name="category" value="new-arrivals">
-                                <label for="new-arrivals" class="text">New arrivals</label>
-                            </div>
-                            <div>
-                                <input type="radio" id="printed-dress" name="category" value="printed-dress">
-                                <label for="printed-dress" class="text">Printed dresses</label>
-                            </div>
-                            <div>
-                                <input type="radio" id="plain-dress" name="category" value="plain-dress">
-                                <label for="plain-dress" class="text">Plain dresses</label>
-                            </div>
-                            <div>
-                                <input type="radio" id="long-sleeved" name="category" value="long-sleeved">
-                                <label for="long-sleeved" class="text">Long sleeved</label>
-                            </div>
-                        </fieldset>
-                    </form>
-                </div>
-                <div class="filters__colors">
-                    <p class="subtitle">Colors</p>
-                    <div class="filters__colors_wrapper">
-                        <div class="filters__colors_block red">
-                            <div class="color_circle color_circle_red"></div>
-                            <div class="text">Red</div>
-                            <div class="color_remove" onclick="removeColorFilter()">✖</div>
+            <div>
+                <div class="fav-title">Favourites</div>
+                <div class="sidebar__filters">
+                        <div class="filters__categories">
+                            <p class="subtitle">Categories</p>
+                            <form class="filters__categories_checkbox">
+                                <fieldset id="categories">
+                                    <div>
+                                        <input type="radio" id="show-all" name="category" value="show-all">
+                                        <label for="show-all" class="text">Show all</label>
+                                    </div>
+                                    <div>
+                                        <input type="radio" id="new-arrivals" name="category" value="new-arrivals">
+                                        <label for="new-arrivals" class="text">New arrivals</label>
+                                    </div>
+                                    <div>
+                                        <input type="radio" id="printed-dress" name="category" value="printed-dress">
+                                        <label for="printed-dress" class="text">Printed dresses</label>
+                                    </div>
+                                    <div>
+                                        <input type="radio" id="plain-dress" name="category" value="plain-dress">
+                                        <label for="plain-dress" class="text">Plain dresses</label>
+                                    </div>
+                                    <div>
+                                        <input type="radio" id="long-sleeved" name="category" value="long-sleeved">
+                                        <label for="long-sleeved" class="text">Long sleeved</label>
+                                    </div>
+                                </fieldset>
+                            </form>
                         </div>
-                        <div class="filters__colors_block black">
-                            <div class="color_circle color_circle_black"></div>
-                            <div class="text">Black</div>
-                            <div class="color_remove" onclick="removeColorFilter()">✖</div>
-                        </div>
-                        <div class="filters__colors_block yellow">
-                            <div class="color_circle color_circle_yellow"></div>
-                            <div class="text">Yellow</div>
-                            <div class="color_remove" onclick="removeColorFilter()">✖</div>
-                        </div>
-                        <div class="filters__colors_block green">
-                            <div class="color_circle color_circle_green"></div>
-                            <div class="text">Green</div>
-                            <div class="color_remove" onclick="removeColorFilter()">✖</div>
-                        </div>
-                        <div class="filters__colors_block blue">
-                            <div class="color_circle color_circle_blue"></div>
-                            <div class="text">Blue</div>
-                            <div class="color_remove" onclick="removeColorFilter()">✖</div>
-                        </div>
-                        <div class="filters__colors_block white">
-                            <div class="color_circle color_circle_white"></div>
-                            <div class="text">White</div>
-                            <div class="color_remove" onclick="removeColorFilter()">✖</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="filters__sizes">
-                    <p class="subtitle">Sizes</p>
-                    <form class="filters__sizes_checkbox">
-                        <fieldset id="size">
-                            <div>
-                                <input type="checkbox" id="XS" name="XS" value="XS">
-                                <label for="XS" class="text">XS</label>
+                        <div class="filters__colors">
+                            <p class="subtitle">Colors</p>
+                            <div class="filters__colors_wrapper">
+                                <div class="filters__colors_block _red">
+                                    <div class="color_circle color_circle_red"></div>
+                                    <div class="text">Red</div>
+                                    <div class="color_remove" onclick="removeColorFilter(event)">✖</div>
+                                </div>
+                                <div class="filters__colors_block _black">
+                                    <div class="color_circle color_circle_black"></div>
+                                    <div class="text">Black</div>
+                                    <div class="color_remove" onclick="removeColorFilter(event)">✖</div>
+                                </div>
+                                <div class="filters__colors_block _yellow">
+                                    <div class="color_circle color_circle_yellow"></div>
+                                    <div class="text">Yellow</div>
+                                    <div class="color_remove" onclick="removeColorFilter(event)">✖</div>
+                                </div>
+                                <div class="filters__colors_block _green">
+                                    <div class="color_circle color_circle_green"></div>
+                                    <div class="text">Green</div>
+                                    <div class="color_remove" onclick="removeColorFilter(event)">✖</div>
+                                </div>
+                                <div class="filters__colors_block _blue">
+                                    <div class="color_circle color_circle_blue"></div>
+                                    <div class="text">Blue</div>
+                                    <div class="color_remove" onclick="removeColorFilter(event)">✖</div>
+                                </div>
+                                <div class="filters__colors_block _white">
+                                    <div class="color_circle color_circle_white"></div>
+                                    <div class="text">White</div>
+                                    <div class="color_remove" onclick="removeColorFilter(event)">✖</div>
+                                </div>
                             </div>
-                            <div>
-                                <input type="checkbox" id="S" name="S" value="S">
-                                <label for="S" class="text">S</label>
-                            </div>
-                            <div>
-                                <input type="checkbox" id="M" name="M" value="M">
-                                <label for="M" class="text">M</label>
-                            </div>
-                            <div>
-                                <input type="checkbox" id="L" name="L" value="L">
-                                <label for="L" class="text">L</label>
-                            </div>
-                            <div>
-                                <input type="checkbox" id="XL" name="XL" value="XL">
-                                <label for="XL" class="text">XL</label>
-                            </div>
-                        </fieldset>
-                    </form>
-                </div>
-                <div class="filters__price">
-                    <p class="subtitle">Price Range</p>
-                    <div id="slider"></div>
-                    <div class="subtitle reset-slider">reset</div>
+                        </div>
+                        <div class="filters__sizes">
+                            <p class="subtitle">Sizes</p>
+                            <form class="filters__sizes_checkbox">
+                                <fieldset id="size">
+                                    <div>
+                                        <input type="checkbox" id="XS" name="XS" value="XS" onclick="onClick()">
+                                        <label for="XS" class="text">XS</label>
+                                    </div>
+                                    <div>
+                                        <input type="checkbox" id="S" name="S" value="S" onclick="onClick()">
+                                        <label for="S" class="text">S</label>
+                                    </div>
+                                    <div>
+                                        <input type="checkbox" id="M" name="M" value="M" onclick="onClick()">
+                                        <label for="M" class="text">M</label>
+                                    </div>
+                                    <div>
+                                        <input type="checkbox" id="L" name="L" value="L" onclick="onClick()">
+                                        <label for="L" class="text">L</label>
+                                    </div>
+                                    <div>
+                                        <input type="checkbox" id="XL" name="XL" value="XL" onclick="onClick()">
+                                        <label for="XL" class="text">XL</label>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                        <div class="filters__price">
+                            <p class="subtitle">Price Range</p>
+                            <div id="slider"></div>
+                            <div class="subtitle reset-slider">reset</div>
+                        </div>
                 </div>
             </div>
         </aside>
@@ -145,6 +150,7 @@
             </div>
             <div class="products__wrapper">
                 <p class='text no-favs' style = 'font-style: italic;'>You haven't chosen your favorite products yet</p>
+                <p class='text no-results' style = 'font-style: italic;'>No searching results</p>
             </div>
         </section>
     </main>
