@@ -20,19 +20,10 @@ export function addToCart(k: any){
                 <div>$</div>
             </div>
         </div>
-        <button class ='remove-from-card'>X</button>
+        <button class ='remove-from-card'>✕</button>
     </div>`;
     
     cartInfo.innerHTML += card_little;
-
-    // let animateCard = cartInfo.firstElementChild;
-
-    // animateCard.animate([
-    //     { transform: 'translate3D(300px, 0, 0)' },
-    //     { transform: 'translate3D(0, 0, 0)' }
-    //   ], {
-    //     duration: 200,
-    //   })
 
    countCards()
    countSum();
