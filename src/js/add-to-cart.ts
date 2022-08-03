@@ -11,23 +11,28 @@ export function addToCart(k: any){
 
 
     let card_little = `<div class = "card_little" id="${CardsData[k].id}" data-id="${counter}">
+        <div class ='count'>1</div>
         <img src="${CardsData[k].img}" alt="${CardsData[k].alt}" class = "card__img_little">
-                <div><p class="text">${CardsData[k].name}</p>
-                <div class="price-wrapper"><div class="card__price_little">${CardsData[k].price}</div>
-                <div>$</div></div></div>
-       <div class='remove-from-card'>✖</div>
+        <div>
+            <p class="text category-text">${CardsData[k].name}</p>
+            <div class="price-wrapper">
+                <div class="card__price_little">${CardsData[k].price}</div>
+                <div>$</div>
+            </div>
+        </div>
+        <button class ='remove-from-card'>X</button>
     </div>`;
     
     cartInfo.innerHTML += card_little;
 
-    let animateCard = cartInfo.lastElementChild;
-    
-    animateCard.animate([
-        { transform: 'translate3D(300px, 0, 0)' },
-        { transform: 'translate3D(0, 0, 0)' }
-      ], {
-        duration: 200,
-      })
+    // let animateCard = cartInfo.firstElementChild;
+
+    // animateCard.animate([
+    //     { transform: 'translate3D(300px, 0, 0)' },
+    //     { transform: 'translate3D(0, 0, 0)' }
+    //   ], {
+    //     duration: 200,
+    //   })
 
    countCards()
    countSum();
@@ -39,7 +44,6 @@ export function addToCart(k: any){
    localStorage.setItem('clearBtn', clearBtn);
    localStorage.setItem('sum', sum);
    localStorage.setItem('quantity', quantity);
-   localStorage.setItem(`card ${counter}`, card_little)
        
 }
 
@@ -49,64 +53,59 @@ export function removeCardLittle(){
 
    cards_remove.forEach(btn =>{
         btn.addEventListener('click', ()=>{
-            let cardCart = btn.parentElement;
-            localStorage.removeItem(`${cardCart.dataset.id}`);
+            // localStorage.setItem('info', cartInfo.innerHTML);
+
+            let deleteCard = btn.parentElement;
+            // localStorage.removeItem(`${deleteCard.dataset.id}`);
+            let count = Number(deleteCard.children[0].innerHTML);
+            count--;
+            deleteCard.children[0].innerHTML = `${count}`
             
-            
-            cardCart.animate([
+            deleteCard.animate([
                 { transform: 'translate3D(0, 0, 0)' },
                 { transform: 'translate3D(-300px, 0, 0)' }
               ], {
                 duration: 200,
               })
             setTimeout(() => {
-                cardCart.remove();
+                localStorage.setItem('info', cartInfo.innerHTML);
+
                 countCards();
                 countSum();
+
                 let sum = document.querySelector('.total__sum').innerHTML;
                 let quantity = document.querySelector('.cards-quantity').innerHTML;
-                console.log(sum)
                 localStorage.setItem('sum', sum);
                 localStorage.setItem('quantity', quantity);
-
            
-
-                let counter = cartInfo.childElementCount;
+                let counter = Number(deleteCard.children[0].innerHTML);
 
                 if(counter === 0){
-                
-                    let cards_hover = document.querySelectorAll('.add_to_cart');
-                    cards_hover.forEach(add => {
-                        add.parentElement.classList.remove('opacity-appear');
-                        add.children[0].innerHTML = 'add to cart';
-                        add.classList.remove('in_cart');
 
+                    localStorage.removeItem(`${deleteCard.id}`);
+
+                    document.querySelectorAll('.card').forEach(card => {
+                        if(deleteCard.id === card.id){
+                            card.children[1].children[1].classList.remove('opacity-appear');
+                            card.children[1].children[1].children[0].children[0].innerHTML = 'add to cart';
+                            card.children[1].children[1].children[0].classList.remove('in_cart')
+                        }
                     })
 
-                }else{
-                    let cart_cards = document.querySelectorAll('.card_little');
-                    let count = 0;
-                    
-                    cart_cards.forEach(el => {
-                        if(el.id === cardCart.id){count++}
-                        else count = 0;
-                    });
-
-                    console.log(count)
-                    
-                    if(count === 0){
-                        document.querySelectorAll('.card').forEach(card =>{
-                            if(cardCart.id === card.id ){
-                                let btn = card.children[1].children[1].children[0];
-
-                                btn.parentElement.classList.remove('opacity-appear');
-                                btn.children[0].innerHTML = 'add to cart';
-                                btn.classList.remove('in_cart');
-                            }
-                        })
-                    }
+                    document.querySelectorAll('.card_little').forEach(card_in_cart => {
+                        if(deleteCard.id === card_in_cart.id){
+                            card_in_cart.remove();
+                            localStorage.setItem('info', cartInfo.innerHTML);
+                        }
+                    })
                     
                 }
+
+                if(cartInfo.childElementCount === 0){
+                    localStorage.clear()
+
+                }
+                
             }, 200);
         })
    
@@ -116,39 +115,57 @@ export function removeCardLittle(){
 function countCards(){
         
     let quantity = document.querySelector('.cards-quantity');
-    let cartInfo = document.querySelector('.sidebar__cart_info');
     let clearAll = document.querySelector<HTMLElement>('.remove-all');
+    let counts: number[] = [];
 
+    document.querySelectorAll('.card_little').forEach(card =>{
+        let isNone = card.classList.contains('display-none');
+        if(!isNone){
+            counts.push(Number(card.children[0].innerHTML));
+        }
+    })
 
-    let counter = cartInfo.childElementCount;
-    quantity.innerHTML = `${counter}`
-    if(counter === 0){
+    let sum = counts.reduce((a, b) => a + b);
+    quantity.innerHTML = `${sum}`;
+
+    if(sum === 0){
         clearAll.style.display = "none";
         quantity.innerHTML = ''
     }
 }
 
 function countSum(){
-    let prices = document.querySelectorAll('.card__price_little');
-    let total_sum = document.querySelector('.total__sum');
 
-    let arr: number[] = [];
-    prices.forEach(el => {
-        let num = Number(el.innerHTML)
-        arr.push(num)
+    let total_wrapper = document.querySelector('.total__sum');
+    let card_little = document.querySelectorAll('.card_little');
+    let total: number[] = [];
+
+    card_little.forEach(card => {
+        let isNone = card.classList.contains('display-none');
+        if (!isNone){
+            let quantity: number = Number(card.children[0].innerHTML);
+            let price: number = Number(card.children[2].children[1].children[0].innerHTML);
+            let sum = quantity * price;
+            total.push(sum)
+        }
     })
-    if(arr.length > 0){
-        let sum = arr.reduce(function(a,b){return a+b});
-        total_sum.innerHTML = `${sum}$`    
+
+    let total_sum = total.reduce(function(a,b){return a+b});
+    total_wrapper.innerHTML = `${total_sum}$`;
+
+    if(total_sum == 0){
+        total_wrapper.innerHTML = '';
     }
-    else
-    {total_sum.innerHTML = "" }
 }
 
 export function clear(){
     localStorage.clear()
 
     let clearAll = document.querySelector<HTMLElement>('.remove-all');
+    let total_sum = document.querySelector('.total__sum');
+    let quantity = document.querySelector('.cards-quantity');
+    total_sum.innerHTML = '';
+    quantity.innerHTML = '';
 
     clearAll.animate([
         { transform: 'translate3D(0, 0, 0)' },
@@ -159,6 +176,7 @@ export function clear(){
     setTimeout(() => {
         clearAll.style.display = 'none';
     }, 300);
+
     document.querySelectorAll('.card_little').forEach(card =>{
         card.animate([
             { transform: 'translate3D(0, 0, 0)' },
@@ -170,9 +188,6 @@ export function clear(){
             card.remove()
         }, 200);
     })
-    setTimeout(() => {
-        countCards();
-    }, 200);
 
     let cards_hover = document.querySelectorAll('.add_to_cart');
 
@@ -182,7 +197,5 @@ export function clear(){
         add.classList.remove('in_cart')
 
     })
-
-       let total_sum = document.querySelector('.total__sum');
-       total_sum.innerHTML = '';
 }
+

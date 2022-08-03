@@ -21,6 +21,7 @@ $font: 'Open Sans', sans-serif;
     font-family: $font;
     text-decoration: none;
     list-style: none;
+    user-select: none;
 }
 
 .subtitle{
@@ -32,6 +33,7 @@ $font: 'Open Sans', sans-serif;
 
 .text{
     color: #676A74;
+    margin-left: 5px;
 }
 
 
@@ -43,10 +45,15 @@ $font: 'Open Sans', sans-serif;
     justify-content: space-between;
     border-bottom:1px solid #eee;
 
+    .burger{
+        display: none;
+    }
+
     .header__menu{
 
         @extend %flex;
         width: 30vw;
+        min-width: 300px;
         justify-content: space-around;
     }
 
@@ -62,7 +69,7 @@ $font: 'Open Sans', sans-serif;
         .header__bar_inner{
             margin-top: 10px;
             position: absolute;
-            right: 14vw;
+            right: 200px;
         }
 
         .favorites{
@@ -112,10 +119,18 @@ fieldset{
 
     .card_little{
         @extend %flex;
-        // width: 205px;
-        // margin-left: -300px;
-    
 
+        .count{
+            
+            position: absolute;
+            background-color: rgba(153, 102, 226, 0.871);
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            text-align: center;
+            margin-top: 45px;
+            color: white;
+        }
 
         .card__img_little{
             width: 50px;
@@ -137,6 +152,8 @@ fieldset{
             cursor: pointer;
             margin-left: auto;
             margin-right: 15px;
+            height: 20px;
+            width: 20px;
         }
 
     }
@@ -160,6 +177,7 @@ fieldset{
         @extend %flex;
         flex-direction: column;
         width: 20vw;
+        min-width: 190px;
         height: 85vh;
         border-right:1px solid #eee;
         margin-left: 3vw;
@@ -172,16 +190,27 @@ fieldset{
                 align-self: flex-end;
             }
 
-            .cart-icon{
+            .in-cart{
+
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                .cart-icon{
                 
-                width: 30px;
-                height: 30px;
+                    width: 35px;
+                    height: 35px;
+                }
+    
+                .cards-quantity{
+                    color: purple;
+                    font-weight: 900;
+                    position: absolute;
+                    margin-top: 5px;
+                }
+
             }
 
-            .cards-quantity{
-                color: purple;
-                font-weight: 900;
-            }
             .remove-all{
                 color: purple;
                 border: 2px solid purple;
@@ -190,7 +219,8 @@ fieldset{
                 display: none;
                 cursor: pointer;
                 margin-left: auto;
-                margin-right: 15%;
+                margin-right: 0px;
+                
             }
 
             .remove-all:hover{
@@ -213,16 +243,13 @@ fieldset{
         }
 
         .fav-title{
-            writing-mode: vertical-lr; 
-            text-orientation: upright; 
+            
             text-transform: uppercase;
             font-weight: 900;
             color: plum;
-            font-size: 3em;
-            letter-spacing: -10px;
-            margin-left: 60px;
-            position: absolute;
+            font-size: 2em;
             z-index: 0;
+            visibility: hidden;
 
         }
 
@@ -241,7 +268,7 @@ fieldset{
                 cursor: pointer;
                 @extend %flex;
                 align-items: center;
-                width: 50%;
+                // width: 50%;
         
                 .color_circle{
                     margin-right: 5px;
@@ -341,9 +368,11 @@ fieldset{
             .card__info{
 
                 @extend %flex;
-                justify-content: space-around;
+                justify-content: space-evenly;
                 background-color: white;
                 height: 15%;
+
+                
     
                 .card__price{
     
@@ -360,7 +389,7 @@ fieldset{
 
             @extend %flex;
             justify-content: center;
-           
+            margin-right: 5%;
         }
 
         .search-bar{
@@ -387,48 +416,57 @@ fieldset{
         .products__wrapper{
             @extend %flex;
             flex-wrap: wrap;
-            justify-content: space-around;
+            justify-content: center;
             width: 80vw;
             min-height: 85vh;
+            
 
             .card{
-                margin-top: 3%;
+                margin: 2%;
                 flex-direction: column;
+                height: 620px;
 
                 .card__hover_wrapper{
                     
                     display: flex;
-                    width: 333px;
-                    height: 466px;
-
-                    // .card__img{
-                    //     position: relative;
-                    // }
-    
+                    
                     .card__hover{
-                        width: 333px;
-                        height: 466px;
+                        
                         position: absolute;
                         background-color: plum;
                         z-index: 1;
                         opacity: 0;
                         cursor: pointer;
                         @include transition(all 200ms ease-out);
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;    
 
 
                         .add_to_cart {
-                            position: absolute;
-                            top: 70%;
-                            left: 50%;
+                            
                             width: 152px;
                             font-size: 16px;
-                            margin-left: -78px;
                             border: 2px solid #fff;
                             color: #fff;
                             text-align: center;
                             padding: 10px 0;
                             opacity: 1;
                             @include transition(all 200ms ease-out);
+
+                            .buttons{
+                                width: 40px;
+                                height: 40px;
+                                background-color: purple;
+                                color:white;
+                                display: none;
+                                align-items: center;
+                                justify-content: center;
+                            }
+
+                            .display-flex{
+                                display: flex;
+                            }
                         }
 
                         .add_to_cart:hover{
@@ -493,9 +531,17 @@ fieldset{
                 .card__info{
 
                     @extend %flex;
-                    justify-content: space-around;
+                    justify-content: space-evenly;
                     background-color: white;
-                    height: 20%;
+                    height: 25%;
+
+                    .card__info_wrapper{
+                        display: flex;
+                        flex-direction: column;
+                        flex-wrap: nowrap;
+                        justify-content: center;
+                        gap: 5%;
+                    }
         
                     .card__price{
         
@@ -518,7 +564,7 @@ fieldset{
 
     margin-top: 40px;
     margin-right: 20px;
-    width: 145%;
+    width: 100%;
 }
 
 .reset-slider{
@@ -566,12 +612,10 @@ fieldset{
 
 
         .add_to_cart {
-            position: absolute;
-            top: 70%;
-            left: 50%;
+            
             width: 152px;
+            height: 35px;
             font-size: 16px;
-            margin-left: -78px;
             border: 2px solid #fff;
             color: #fff;
             text-align: center;
@@ -621,7 +665,7 @@ fieldset{
 
 .no-favs,
 .no-results{
-    margin: 20%;
+    margin-bottom: 40vh;
     font-size: 0px;
     position: absolute;
     bottom: 0;
@@ -807,4 +851,119 @@ fieldset{
         margin-right: 0px;
         opacity: 1;
     }
+}
+
+#home{
+    cursor: pointer;
+}
+
+@media (max-width: 600px) {
+
+    .name,
+    .category-text{
+        
+        font-size: 0.8em;
+    }
+
+    .header {
+        .burger{
+            display:flex;
+            width: 17vw;
+            margin: 20px;
+
+        }
+
+        .header__menu {
+        display: none;
+    }
+    }
+
+    .products .products__wrapper .card{
+       
+        width: 233px;
+        height: 520px;
+
+        .card__hover_wrapper{
+            width: 233px;
+            height: 330px;
+
+            .card__hover{
+                width: 233px;
+                height: 330px;
+            }
+        }
+
+        
+    }
+    
+    
+}
+
+@media (max-width: 400px) {
+
+    #clear{
+        background-color: #eee;
+        font-size: 0.5em;
+    }
+
+    .header .header__bar .header__bar_inner {
+        right: 150px;
+
+        .favorites {
+            width: 30px;
+        }
+
+    }
+
+    .main .sidebar {
+
+        min-width: 140px;
+    }
+
+    .products .products__wrapper .card{
+       
+        width: 180px;
+        height: 350px;
+
+        .card__favs{
+            width: 40px;
+            height: 40px;
+        }
+
+        .card__hover_wrapper{
+            width: 180px;
+            height: 230px;
+
+            .card__hover{
+                width: 180px;
+                height: 230px;
+
+                .add_to_cart{
+                    width: 95px;
+                    font-size: 12px;
+                    
+
+                }
+            }
+        }
+
+        .card__info {
+
+            height: unset;
+
+            .card__info_wrapper {
+                gap: unset;
+
+            }
+
+            .card__price{
+                font-size: 1em;
+            }
+        
+        }
+
+      
+    }
+    
+    
 }
