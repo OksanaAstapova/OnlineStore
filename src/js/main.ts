@@ -553,7 +553,6 @@ let click = 0;
 
 function onClick(){
     click++
-    console.log(click)
 }
 
 
