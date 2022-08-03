@@ -46,6 +46,7 @@ export function showFavorites(){
             
             var filters = document.querySelector('.sidebar__filters');
             const sidebar = document.querySelector('.sidebar') as HTMLElement; 
+            const fav_title = document.querySelector('.fav-title') as HTMLElement; 
 
 
             filters.animate([
@@ -54,12 +55,29 @@ export function showFavorites(){
             ], {
                 duration: 200,
             })
+            fav_title.style.visibility = 'visible';
             setTimeout(() => {
                 filters.classList.add('display-none')
             }, 200);
         }
         else {
-            searchBtn.classList.remove('searchBtn-disappear');
+            
+            closeFavs();
+        }
+
+            resetFilterCategory();
+            resetFilterSize();
+            resetFilterColor();
+    })
+
+}
+
+export function closeFavs(){
+    let searchBtn = document.querySelector('.search-btn');
+    let card__favs = document.querySelectorAll('.card__favs');
+    const fav_title = document.querySelector('.fav-title') as HTMLElement; 
+    
+    searchBtn.classList.remove('searchBtn-disappear');
             searchBtn.classList.add('searchBtn-appear');
 
 
@@ -79,16 +97,10 @@ export function showFavorites(){
               ], {
                 duration: 400,
               })
+            fav_title.style.visibility = 'hidden';
             setTimeout(() => {
                 filters.classList.remove('display-none')
             }, 200);
-        }
-
-            resetFilterCategory();
-            resetFilterSize();
-            resetFilterColor();
-    })
-
 }
 
 export function addFavs(){

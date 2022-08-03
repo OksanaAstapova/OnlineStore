@@ -1,9 +1,11 @@
 
-import {CardsData} from './cards-data'
-import {addToCart, clear, removeCardLittle} from './add-to-cart'
-import {showFavorites, addFavs} from './favourites'
+import {CardsData} from './cards-data';
+import {createCard} from './create-cards';
+import {addToCart, clear, removeCardLittle} from './add-to-cart';
+import {closeFavs} from './favourites';
 import * as noUiSlider from 'nouislider';
 import 'nouislider/dist/nouislider.css';
+import { max } from 'lodash';
 
 declare global {
     interface Window { addToCart: any; }
@@ -14,75 +16,8 @@ declare global {
 }
 
 window.addToCart = addToCart;
-let wrapper: any = document.querySelector(".products__wrapper");
 let colors = document.querySelectorAll('.filters__colors_block');
 
-
-function createCard(CardsData: string | any[]){
-
-    for(let k=0; k<CardsData.length; k++){
-        let card: any = `<div class = "card" id='${CardsData[k].id}'>
-        <img class="card__favs" src="favs.png">
-        <div class = 'card__hover_wrapper'>
-            <img src="${CardsData[k].img}" alt="${CardsData[k].alt}" class = "card__img">
-            <div class = 'card__hover'>
-                <div class = 'add_to_cart' onclick = 'addToCart(${k})', onclick = 'addAppear(${k})'>
-                <p class = 'subtitle'>Add to cart</p>
-                </div>
-            </div>
-        </div>
-        <div class="card__info">
-                    <div>
-                        <p class="subtitle name">${CardsData[k].name}</p>
-                        <p class="text">${CardsData[k].category}</p>
-                        <p class="text colors">${CardsData[k].color}</p>
-                        <p class="text" style = 'color: black'>${CardsData[k].sizes}</p>
-                    </div>
-                    <div class="card__price"><div>${CardsData[k].price}</div><div>$</div></div>
-                </div>
-        </div>`;
-
-        wrapper.innerHTML += card;
-        addHover();
-        addFavs();
-        showFavorites()
-
-
-        let colors = document.querySelectorAll('.colors');
-        colors.forEach(color =>{
-            let value = color.innerHTML;
-            switch (value) {
-                case 'red':
-                    color.classList.add('red');
-                break;
-
-                case 'yellow':
-                    color.classList.add('yellow');
-                break;
-
-                case 'green':
-                    color.classList.add('green');
-                break;
-
-                case 'blue':
-                    color.classList.add('blue');
-                break;
-
-                case 'white':
-                    color.classList.add('white');
-                break;
-
-                case 'black':
-                    color.classList.add('black');
-                break;
-            
-                
-            }
-        })
-        
-    }
-
-}
 
 document.addEventListener("DOMContentLoaded", () => {
         createCard(CardsData);
@@ -101,21 +36,34 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                 })
 
-                if(key === 'quantity'){
-                    let quantity = `${localStorage.getItem(key)}`
-                document.querySelector('.cards-quantity').innerHTML = quantity;
+                switch (key) {
 
-                }else if(key === 'sum'){
-                    let sum = `${localStorage.getItem(key)}`
-                document.querySelector('.total__sum').innerHTML = sum;
+                    case 'quantity':
 
-                }else if(key === 'clearBtn'){
-                let clear = `${localStorage.getItem(key)}`
-                document.getElementById('clear').style.display = clear;
-                               
-                }else{
-                let card_little = `${localStorage.getItem(key)}`
-                document.querySelector('.sidebar__cart_info').innerHTML += card_little;
+                        let quantity = `${localStorage.getItem(key)}`
+                        document.querySelector('.cards-quantity').innerHTML = quantity;
+                        
+                    break;
+
+                    case 'sum':
+
+                        let sum = `${localStorage.getItem(key)}`
+                        document.querySelector('.total__sum').innerHTML = sum;
+                        
+                    break;
+
+                    case 'clearBtn':
+
+                        let clear = `${localStorage.getItem(key)}`
+                        document.getElementById('clear').style.display = clear;
+                        
+                    break;
+
+                    default:
+
+                        let cart = `${localStorage.getItem(key)}`
+                         document.querySelector('.sidebar__cart_info').innerHTML += cart;
+                    break;
                 }
             }
             
@@ -123,7 +71,6 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById('clear').addEventListener('click',()=>{
                 clear()
             })
-            
         }
 
 // Sort ---------------------------------------------------------------------
@@ -478,7 +425,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }else no_results.classList.remove('appear')
     
     })
- 
 })
 
 export function resetFilterCategory(){
@@ -522,25 +468,6 @@ export function resetFilterSize(){
         }
     }) 
 }
-
-function addHover(){
-    let cards_hover = document.querySelectorAll('.add_to_cart');
-
-    cards_hover.forEach(add => {
-     add.addEventListener('click', ()=>{
-        
-         add.parentElement.classList.add('opacity-appear');
-         add.children[0].innerHTML = 'in cart';
-         add.classList.add('in_cart')
-
-         let id = add.parentElement.parentElement.parentElement.id;
-         localStorage.setItem(id, '');
-     })
-    })
-
-}
-
-
 
 
 // noUiSlider---------------------------------------------------------
@@ -645,8 +572,8 @@ export function animationAppear(arg: any){
 
 export function animationHide(arg: any){
     arg.animate([
-        { transform: 'translate3D(0, 0, 0)' },
-        { transform: 'translate3D(0, 500px, 0)' }
+        { opacity: 1 },
+        { opacity: 0 }
       ], {
         duration: 200,
       })
@@ -654,7 +581,26 @@ export function animationHide(arg: any){
         arg.classList.add('display-none')
     }, 200);
 }
-function category(category: any) {
-    throw new Error('Function not implemented.');
-}
+
+document.querySelector('.burger').addEventListener('click', ()=>{
+    let favorites: any = document.querySelector('.favorites');
+
+    if (favorites.classList.contains('favs-active')){
+       
+        favorites.classList.remove('favs-active');
+
+        closeFavs();
+    }
+})
+
+document.querySelector('#home').addEventListener('click', ()=>{
+    let favorites: any = document.querySelector('.favorites');
+
+    if (favorites.classList.contains('favs-active')){
+       
+        favorites.classList.remove('favs-active');
+
+        closeFavs();
+    }
+})
 
