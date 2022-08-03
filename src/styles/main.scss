@@ -24,6 +24,11 @@ $font: 'Open Sans', sans-serif;
     user-select: none;
 }
 
+body{
+    max-width: 100vw;
+
+}
+
 .subtitle{
     text-transform: uppercase;
     font-weight: 600;
@@ -70,6 +75,7 @@ $font: 'Open Sans', sans-serif;
             margin-top: 10px;
             position: absolute;
             right: 200px;
+            top: 10px;
         }
 
         .favorites{
@@ -394,7 +400,7 @@ fieldset{
 
         .search-bar{
             width: 0px;
-            height: 50px;
+            height: 40px;
             opacity: 0;
             font-family: $font;
             padding-left: 20px;
@@ -719,7 +725,7 @@ fieldset{
         opacity: 0;
     }
     to{
-        width:20vw;
+        width:200px;
         opacity: 1;
     }
 }
@@ -857,6 +863,14 @@ fieldset{
     cursor: pointer;
 }
 
+@media (max-width: 800px) {
+
+    .products .products__sort {
+
+        justify-content: flex-start;
+    }
+}
+
 @media (max-width: 600px) {
 
     .name,
@@ -866,6 +880,27 @@ fieldset{
     }
 
     .header {
+
+        .header__bar {
+        
+            .header__bar_inner {
+                
+                right: 250px;
+        
+                .favorites {
+                    width: 30px;
+                }
+            }
+
+            .search-btn{
+                width: 55px;
+                margin-right: 105px;
+            }
+    
+        }
+
+        
+
         .burger{
             display:flex;
             width: 17vw;
@@ -878,24 +913,35 @@ fieldset{
     }
     }
 
-    .products .products__wrapper .card{
-       
-        width: 233px;
-        height: 520px;
+    .products {
+        
+        .products__sort{
+            justify-content: center;
 
-        .card__hover_wrapper{
-            width: 233px;
-            height: 330px;
-
-            .card__hover{
-                width: 233px;
-                height: 330px;
+            .search-bar{
+                top: 15px;
+                right: -90px;
             }
         }
-
-        
-    }
     
+        .products__wrapper .card{
+        
+            width: 233px;
+            height: 520px;
+
+            .card__hover_wrapper{
+                width: 233px;
+                height: 330px;
+
+                .card__hover{
+                    width: 233px;
+                    height: 330px;
+                }
+            }
+
+            
+        }
+    }
     
 }
 
@@ -906,13 +952,29 @@ fieldset{
         font-size: 0.5em;
     }
 
-    .header .header__bar .header__bar_inner {
-        right: 150px;
+    .header .header__bar {
 
-        .favorites {
-            width: 30px;
+        .header__bar_inner{
+
+            right: 178px;
+
         }
+    
+        .search-btn {
 
+            margin-right: 35px;
+        }
+    }
+
+    @keyframes search-appear {
+        from{
+            width: 0px;
+            opacity: 0;
+        }
+        to{
+            width:150px;
+            opacity: 1;
+        }
     }
 
     .main .sidebar {
